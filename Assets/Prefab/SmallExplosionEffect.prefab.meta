@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: a8c2849d21ebb8c4ab67732676c814c2
+timeCreated: 1473254700
+licenseType: Store
+NativeFormatImporter:
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 73777
+  packageName: Legacy Particle Pack
+  packageVersion: 3.0
+  assetPath: Assets/UnityTechnologies/EffectExamples/FireExplosionEffects/Prefabs/SmallExplosionEffect.prefab
+  uploadId: 680137
