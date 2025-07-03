@@ -29,7 +29,7 @@ public class PointerControl : MonoBehaviour
     {
         if (isActive)
         {
-            Vector3 mousePositin =Vector3.zero;
+            Vector3 mousePositin = Vector3.zero;
             Ray mouseRay = Camera.main.ScreenPointToRay(Input.mousePosition);
             if (Physics.Raycast(mouseRay, out RaycastHit mouseHit))
             {
@@ -39,21 +39,21 @@ public class PointerControl : MonoBehaviour
             pointerObject.transform.position = mousePositin;
             pointerObject.transform.LookAt(targetEraser.transform.position);
 
-            Ray ray = new Ray(pointerObject.transform.position,pointerObject.transform.forward);
- 
+            Ray ray = new Ray(pointerObject.transform.position, pointerObject.transform.forward);
+
             Debug.DrawRay(pointerObject.transform.position, pointerObject.transform.forward * maxRayDistance, Color.red);
             hitPosition = Vector3.zero;
-            foreach (RaycastHit hit in Physics.RaycastAll(ray,maxRayDistance))
+            foreach (RaycastHit hit in Physics.RaycastAll(ray, maxRayDistance))
             {
                 GameObject hitObject = hit.collider.gameObject.transform.parent.gameObject;
-                if(hitObject.GetComponent<EraserControlBase>() == null)
+                if (hitObject.GetComponent<EraserControlBase>() == null)
                 {
                     continue;
                 }
                 int hitPlayerNumber = hitObject.GetComponent<EraserControlBase>().playerNumber;
-                if (hitPlayerNumber == targetEraser.GetComponent<EraserControlBase>().playerNumber )
+                if (hitPlayerNumber == targetEraser.GetComponent<EraserControlBase>().playerNumber)
                 {
-                    if(hitPosition == Vector3.zero || Vector3.Distance(pointerObject.transform.position,hit.point) < Vector3.Distance(pointerObject.transform.position,hitPosition))
+                    if (hitPosition == Vector3.zero || Vector3.Distance(pointerObject.transform.position, hit.point) < Vector3.Distance(pointerObject.transform.position, hitPosition))
                     {
                         //Debug.Log("D");
                         hitPosition = hit.point;
@@ -61,13 +61,14 @@ public class PointerControl : MonoBehaviour
                         position.y = targetEraser.GetComponent<EraserControlBase>().GetTopPosition();
                         hitMarker.transform.position = position;
                         hitEraser = hit;
+                        //directionRotation.DataSet(hitEraser, pointerObject.transform.forward);
                         continue;
                     }
-                   
-                } 
-                
+
+                }
+
             }
-                
+
         }
         hitMarker.SetActive(isActive);
 

@@ -41,11 +41,13 @@ public class DirectionRotation : MonoBehaviour
             rotatePower = Vector3.Distance(GetCenter(hit), hit.point);
             rotatePower *= 10;
         }
-        rotatePower = Normalize(rotatePower);
 
+        rotatePower = float.Parse(rotatePower.ToString("N2"));
+        rotatePower = Normalize(rotatePower);
         outputDirection = inputDirection.normalized + rayDirection.normalized * (rotatePower/10);
         outputDirection = outputDirection.normalized;
 
+        Debug.Log(rotatePower);
         outputRotation = RotationDirection(hit) * rotatePower;
     }
     //AI
@@ -77,24 +79,20 @@ public class DirectionRotation : MonoBehaviour
     {
         switch (hitSide)
         {
-            case HitSide.front:
-                value *= 10;
-                value /= 2;
-                break;
-
             case HitSide.Left:
             case HitSide.Right:
-                value -= 4;
-                value *= value;
-                value *= 5;
+            case HitSide.back:
+                if(value < 0.5f)
+                {
+                    value = 0;
+                }
+                value *= 10f;
                 break;
 
-            case HitSide.back:
-                value *= value;
-                value /= 1.7f;
+            case HitSide.front:
                 break;
         }
-        return value * 5;
+        return value;
     }
     public Vector3 RotationDirection(RaycastHit hit)
     {

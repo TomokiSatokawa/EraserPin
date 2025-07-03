@@ -3442,6 +3442,7 @@ MonoBehaviour:
   outputRotation: {x: 0, y: 0, z: 0}
   inputDirection: {x: 0, y: 0, z: 0}
   distance: 0
+  hitSide: 0
 --- !u!1 &1414860314
 GameObject:
   m_ObjectHideFlags: 0

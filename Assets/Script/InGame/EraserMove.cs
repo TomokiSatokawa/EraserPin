@@ -33,13 +33,12 @@ public class EraserMove : MonoBehaviourPunCallbacks
         local *= 10;
         hitPosition = targetEraser.transform.TransformPoint(local);
         Rigidbody rb = targetEraser.GetComponent<Rigidbody>();
-        rb.AddForceAtPosition(direction * power / 100, hitPosition, ForceMode.Impulse);
-        Debug.Log(rotate * power);
+        rb.AddForce(direction * power / 50, ForceMode.Impulse);
         rb.inertiaTensor = new Vector3(1f, 0.1f, 1f); // åyÇ≠Ç∑ÇÈï˚å¸Çí≤êÆ
         rb.inertiaTensorRotation = Quaternion.identity;
         rb.maxAngularVelocity = 100f;
-        //rb.maxDepenetrationVelocity = 100f;
-        rb.AddTorque(rotate/ 1000,ForceMode.Impulse);
+        Debug.Log(rotate);
+        rb.AddTorque(rotate,ForceMode.Impulse);
         FindAnyObjectByType<GameManager>().Check();
     }
 }
