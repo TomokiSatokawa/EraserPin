@@ -45,6 +45,10 @@ public class PointerControl : MonoBehaviour
             hitPosition = Vector3.zero;
             foreach (RaycastHit hit in Physics.RaycastAll(ray, maxRayDistance))
             {
+                if(!hit.collider.gameObject.CompareTag("EraserMesh"))
+                {
+                    continue;
+                }
                 GameObject hitObject = hit.collider.gameObject.transform.parent.gameObject;
                 if (hitObject.GetComponent<EraserControlBase>() == null)
                 {

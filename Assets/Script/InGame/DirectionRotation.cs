@@ -47,7 +47,6 @@ public class DirectionRotation : MonoBehaviour
         outputDirection = inputDirection.normalized + rayDirection.normalized * (rotatePower/10);
         outputDirection = outputDirection.normalized;
 
-        Debug.Log(rotatePower);
         outputRotation = RotationDirection(hit) * rotatePower;
     }
     //AI

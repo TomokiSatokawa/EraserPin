@@ -28,9 +28,13 @@ public class ScrollbarControl : MonoBehaviour
         content.SetActive(true);
         Clone(playerList, ranking);
 
-        scrollRect.verticalNormalizedPosition = 1f;
+        scrollRect.verticalNormalizedPosition = 0f;
 
 
+    }
+    public void FadeIn()
+    {
+        //    for(int i= ;)
     }
     public void Clone(List<PlayerData> playerList, List<int> ranking)
     {

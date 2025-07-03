@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 4327746305111396565}
   m_Layer: 0
   m_Name: "\u7ACB\u65B9\u4F53.001"
-  m_TagString: Untagged
+  m_TagString: EraserMesh
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -182,7 +182,7 @@ GameObject:
   - component: {fileID: 3261698133745370349}
   m_Layer: 0
   m_Name: "\u5186\u67F1"
-  m_TagString: Untagged
+  m_TagString: EraserMesh
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -451,7 +451,7 @@ Rigidbody:
   m_GameObject: {fileID: 6605304869885609200}
   serializedVersion: 4
   m_Mass: 0.05
-  m_Drag: 5
+  m_Drag: 0.01
   m_AngularDrag: 7
   m_CenterOfMass: {x: 0, y: 0, z: 0}
   m_InertiaTensor: {x: 1, y: 1, z: 1}
@@ -545,7 +545,7 @@ GameObject:
   - component: {fileID: 2241990239620422665}
   m_Layer: 0
   m_Name: "\u7ACB\u65B9\u4F53"
-  m_TagString: Untagged
+  m_TagString: EraserMesh
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
