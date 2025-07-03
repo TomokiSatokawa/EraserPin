@@ -4,6 +4,7 @@ using UnityEngine;
 using DG.Tweening;
 using UnityEngine.SocialPlatforms.Impl;
 using Photon.Pun;
+using UnityEngine.UIElements;
 public class CameraWork : MonoBehaviourPunCallbacks
 {
     public bool isFocus;
@@ -88,5 +89,12 @@ public class CameraWork : MonoBehaviourPunCallbacks
     {
         DOTween.To(() => this.GetComponent<Camera>().fieldOfView, num => this.GetComponent<Camera>().fieldOfView = num,cameraZoomDefault + value,time ).SetDelay(dlay);
         
+    }
+    public void Result()
+    {
+        
+        this.gameObject.transform.DOMove(new Vector3(1.29999995f, 4.13727474f, 23.7900009f), 2f, false);
+        this.gameObject.transform.DORotate(Vector3.zero, 2f)
+            .OnComplete(() => gameManager.Ranking());
     }
 }

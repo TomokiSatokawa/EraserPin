@@ -7,6 +7,9 @@ public class EraserControlBase : MonoBehaviour
 {
     public int playerNumber;
     public GameObject TopPosition;
+    public GameObject rightPosition;
+    public GameObject leftPosition;
+    public GameObject backPosition;
 
     // Start is called before the first frame update
     void Start()

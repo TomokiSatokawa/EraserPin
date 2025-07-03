@@ -16,7 +16,7 @@ public class EraserMove : MonoBehaviourPunCallbacks
         
     }
     [PunRPC]
-    public void Move(int eraserIndex, float power , Vector3 direction , Vector3 hitPosition)
+    public void Move(int eraserIndex, float power , Vector3 direction ,Vector3 rotate, Vector3 hitPosition)
     {
         if(PlayerPrefs.GetInt("Dnumber") != 1)
         {
@@ -32,7 +32,14 @@ public class EraserMove : MonoBehaviourPunCallbacks
         Vector3 local = targetEraser.transform.InverseTransformPoint(hitPosition);
         local *= 10;
         hitPosition = targetEraser.transform.TransformPoint(local);
-        targetEraser.GetComponent<Rigidbody>().AddForceAtPosition(direction * power, hitPosition, ForceMode.Force);
+        Rigidbody rb = targetEraser.GetComponent<Rigidbody>();
+        rb.AddForceAtPosition(direction * power / 100, hitPosition, ForceMode.Impulse);
+        Debug.Log(rotate * power);
+        rb.inertiaTensor = new Vector3(1f, 0.1f, 1f); // åyÇ≠Ç∑ÇÈï˚å¸Çí≤êÆ
+        rb.inertiaTensorRotation = Quaternion.identity;
+        rb.maxAngularVelocity = 100f;
+        //rb.maxDepenetrationVelocity = 100f;
+        rb.AddTorque(rotate/ 1000,ForceMode.Impulse);
         FindAnyObjectByType<GameManager>().Check();
     }
 }

@@ -13,6 +13,7 @@ public class GameManager : MonoBehaviourPunCallbacks, IPunObservable
     public EraserClone eraserClone;
     public PowerSlider powerSlider;
     public StopCheck stopCheck;
+    public ScrollbarControl scrollbarControl;
     public GameObject eraserMove;
     public GameObject cameraPhotonView;
     public ColorData colorData;
@@ -73,7 +74,7 @@ public class GameManager : MonoBehaviourPunCallbacks, IPunObservable
     {
 
         turn++;
-        Debug.Log(turn);
+        //Debug.Log(turn);
         int aliveCount = 0;
         foreach(PlayerData playerData in playerList)
         {
@@ -85,6 +86,7 @@ public class GameManager : MonoBehaviourPunCallbacks, IPunObservable
         if(aliveCount == 1)
         {
             Debug.Log("Clear");
+            cameraWork.Result();
             return;
         }
         if (turn > playerList.Count)
@@ -120,10 +122,12 @@ public class GameManager : MonoBehaviourPunCallbacks, IPunObservable
     }
     public void Move()
     {
-        float power = powerSlider.GetData();
         Vector3 direction = pointerControl.GetData();
         Vector3 hitPosition = pointerControl.GetHitPosition();
-        eraserMove.GetComponent<PhotonView>().RPC("Move",RpcTarget.All,turn,power,direction,hitPosition);
+        Vector3 rotate = pointerControl.GetRotate();
+        float power = powerSlider.GetData();
+        power = pointerControl.GetPower(power);
+        eraserMove.GetComponent<PhotonView>().RPC("Move",RpcTarget.All,turn,power,direction,rotate,hitPosition);
         
     }
     public void Check()
@@ -149,6 +153,17 @@ public class GameManager : MonoBehaviourPunCallbacks, IPunObservable
         {
             turn = (int)stream.ReceiveNext();
         }
+    }
+    public void Ranking()
+    {
+        List<int> rank = new List<int>();
+        int i = 1;
+        foreach (PlayerData playerNumber in playerList)
+        {
+            rank.Add(i);
+            i++;
+        }
+        scrollbarControl.View(playerList, rank);
     }
 }
 

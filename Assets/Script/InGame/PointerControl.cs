@@ -12,6 +12,7 @@ public class PointerControl : MonoBehaviour
     public GameObject hitMarker;
     public GameObject targetEraser;
     public GameObject nextButton;
+    public DirectionRotation directionRotation;
     private int turn;
     private Vector3 hitPosition;
     private Vector3 vector;
@@ -93,7 +94,18 @@ public class PointerControl : MonoBehaviour
     }
     public Vector3 GetData()
     {
-        return vector;
+        directionRotation.DataSet(hitEraser, pointerObject.transform.forward);
+        return directionRotation.GetDirection();
+    }
+    public Vector3 GetRotate()
+    {
+        directionRotation.DataSet(hitEraser, pointerObject.transform.forward);
+        return directionRotation.GetRotation();
+    }
+    public float GetPower(float Power)
+    {
+        directionRotation.DataSet(hitEraser, pointerObject.transform.forward);
+        return  directionRotation.Power(Power);
     }
     public Vector3 GetHitPosition()
     {
