@@ -20,29 +20,34 @@ public class ScrollbarControl : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+
     }
-    public void View(List<PlayerData> playerList,List<int> ranking)
+    public void View(List<PlayerData> playerList, List<int> ranking)
     {
         //scrollRect.enabled = false;
         content.SetActive(true);
         Clone(playerList, ranking);
 
-        scrollRect.verticalNormalizedPosition = 0f;
+        scrollRect.verticalNormalizedPosition = 0;
 
 
-    }
-    public void FadeIn()
-    {
-        //    for(int i= ;)
     }
     public void Clone(List<PlayerData> playerList, List<int> ranking)
     {
         clonedObject = new List<GameObject>();
-        foreach(int i in ranking)
+        int a = 0;
+        foreach (int i in ranking)
         {
-            GameObject newObject = Instantiate(clonePrefab,content.transform);
+            GameObject newObject = Instantiate(clonePrefab, content.transform);
             clonedObject.Add(newObject);
+            newObject.GetComponent<RankingPanelControl>().SetData(a + 1, a + 1);
+            a++;
         }
+        GameObject newObject_ = Instantiate(clonePrefab, content.transform);
+        newObject_.GetComponent<RankingPanelControl>().Hidden();
+        newObject_ = Instantiate(clonePrefab, content.transform);
+        newObject_.GetComponent<RankingPanelControl>().Hidden(); 
+        newObject_ = Instantiate(clonePrefab, content.transform);
+        newObject_.GetComponent<RankingPanelControl>().Hidden();
     }
 }

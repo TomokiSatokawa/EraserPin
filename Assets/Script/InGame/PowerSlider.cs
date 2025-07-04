@@ -23,8 +23,12 @@ public class PowerSlider : MonoBehaviour
     {
         SliderMove();
     }
-    public void Active(bool a)
+    public void Active(bool a,int deviceNumber = 0)
     {
+        if (deviceNumber != 0 && deviceNumber != PlayerPrefs.GetInt("Dnumber"))
+        {
+            return;
+        }
         sliderObject.SetActive(a);
         stopButton.SetActive(a);
         powerSlider.value = powerSlider.maxValue;

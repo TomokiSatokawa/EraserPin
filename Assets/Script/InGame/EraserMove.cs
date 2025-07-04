@@ -33,12 +33,12 @@ public class EraserMove : MonoBehaviourPunCallbacks
         local *= 10;
         hitPosition = targetEraser.transform.TransformPoint(local);
         Rigidbody rb = targetEraser.GetComponent<Rigidbody>();
-        Debug.Log("Foce" + direction * power);
+        Log.text("Foce" + direction * power);
         rb.AddForce(direction * power/50, ForceMode.Impulse);
         rb.inertiaTensor = new Vector3(1f, 0.1f, 1f); // Œy‚­‚·‚é•ûŒü‚ð’²®
         rb.inertiaTensorRotation = Quaternion.identity;
         rb.maxAngularVelocity = 10f;
-        Debug.Log("Rotate" + rotate * power);
+        Log.text("Rotate" + rotate * power);
         if((rotate * power).magnitude >= 100)
         {
             rotate = Vector3.zero;

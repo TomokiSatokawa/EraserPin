@@ -86,7 +86,7 @@ public class GameManager : MonoBehaviourPunCallbacks, IPunObservable
         if(aliveCount == 1)
         {
             Debug.Log("Clear");
-            cameraWork.Result();
+            cameraPhotonView.GetComponent<PhotonView>().RPC("Result", RpcTarget.All);
             return;
         }
         if (turn > playerList.Count)
@@ -113,7 +113,7 @@ public class GameManager : MonoBehaviourPunCallbacks, IPunObservable
     }
     public void Power()
     {
-      powerSlider.Active(true);   
+        powerSlider.Active(true, playerList[turn -1].deviceNumber);   
     }
     public void EraserFocus()
     {

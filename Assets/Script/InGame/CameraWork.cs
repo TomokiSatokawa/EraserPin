@@ -90,9 +90,10 @@ public class CameraWork : MonoBehaviourPunCallbacks
         DOTween.To(() => this.GetComponent<Camera>().fieldOfView, num => this.GetComponent<Camera>().fieldOfView = num,cameraZoomDefault + value,time ).SetDelay(dlay);
         
     }
+    [PunRPC]
     public void Result()
     {
-        
+        Zoom(20, 2);
         this.gameObject.transform.DOMove(new Vector3(1.29999995f, 4.13727474f, 23.7900009f), 2f, false);
         this.gameObject.transform.DORotate(Vector3.zero, 2f)
             .OnComplete(() => gameManager.Ranking());
