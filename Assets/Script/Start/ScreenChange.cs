@@ -2,25 +2,22 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
-
+using UnityEngine.SceneManagement;
 public class ScreenChange : MonoBehaviourPunCallbacks
 {
     public GameObject title;
     public GameObject room;
+    public GameObject roomOption;
     public GameObject inRoom;
+    public GameObject searchRoom;
     public GameObject playerCount;
     public GameObject errorObject;
     public GameObject characterChoice;
     public GameObject stageSelect;
     private void Awake()
     {
+        Active();
         title.SetActive(true);
-        room.SetActive(false);
-        inRoom.SetActive(false);
-        playerCount.SetActive(false);
-        errorObject.SetActive(false);
-        characterChoice.SetActive(false);
-        stageSelect.SetActive(false);
     }
     private void Start()
     {
@@ -43,9 +40,12 @@ public class ScreenChange : MonoBehaviourPunCallbacks
                 break;
             case 1:
                 room.SetActive(true);
+                inRoom.SetActive(false);
+                roomOption.SetActive(false);
+                searchRoom.SetActive(false);
                 break;
             case 2:
-                inRoom.SetActive(true);
+                inRoom.SetActive(false);
                 break;
             case 3:
                 playerCount.SetActive(true);
@@ -58,6 +58,25 @@ public class ScreenChange : MonoBehaviourPunCallbacks
                 break;
             case 10:
                 errorObject.SetActive(false);
+                SceneManager.LoadScene("Start");
+                break;
+        }
+    }
+    public void Parallel(int a)
+    {
+        inRoom.SetActive(false);
+        roomOption.SetActive(false);
+        searchRoom.SetActive(false);
+        switch (a)
+        {
+            case 0:
+                inRoom.SetActive(true);
+                break;
+            case 1:
+                roomOption.SetActive(true);
+                break;
+            case 2:
+                searchRoom.SetActive(true);
                 break;
         }
     }
@@ -66,6 +85,8 @@ public class ScreenChange : MonoBehaviourPunCallbacks
         title.SetActive(false);
         room.SetActive(false);
         inRoom.SetActive(false);
+        roomOption.SetActive(false);
+        searchRoom.SetActive(false);
         playerCount.SetActive(false);
         characterChoice.SetActive(false);
         stageSelect.SetActive(false);

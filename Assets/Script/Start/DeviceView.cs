@@ -151,6 +151,7 @@ public class DeviceView : MonoBehaviourPunCallbacks
     }
     public void CharacterChoiceMove()
     {
+        PhotonNetwork.CurrentRoom.IsOpen = false;
         canvasPhoton.RPC("OnClick", RpcTarget.All, 4);
     }
     public void SetDeviceNumber()

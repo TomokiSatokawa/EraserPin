@@ -11,36 +11,99 @@ public class RoomManager : MonoBehaviourPunCallbacks
     public TextMeshProUGUI loadText;
     public TextMeshProUGUI roomPas;
     public TextMeshProUGUI masterText;
-    public GameObject deviceViewPhoton; 
+    public GameObject deviceViewPhoton;
+    public GameObject errorText;
+    public GameObject content;
+    public GameObject clonePrefab;
     private ScreenChange screenChange;
     private int deviceNumber;
     private string deviceName;
+    private List<RoomInfo> roomList;
+    private List<GameObject> clonedList = new List<GameObject>();
+    private RoomManager.mode gamemode;
+    public enum mode
+    {
+        Normal,Hard
+    }
     // Start is called before the first frame update
     void Start()
     {
         screenChange = FindAnyObjectByType<ScreenChange>();
     }
-    public void CreateRandomRoom()
+    public bool FindRoom(string name)
     {
-        RoomOptions roomOptions = new RoomOptions
+        bool found = false;
+        foreach(RoomInfo roomInfo in roomList)
         {
-            MaxPlayers = 4, // 例: 最大4人
-            IsVisible = true, // ロビーに表示
-            IsOpen = true // 参加可能
-        };
-
+            if(roomInfo.Name == name)
+            {
+                found = true;
+            }
+            
+        }
+        return found;
+    }
+    public override void OnRoomListUpdate(List<RoomInfo> list)
+    {
+        roomList = list;
+    }
+    public void CreateRandomRoom(RoomOptions roomOptions,mode roomMode)
+    {
+        gamemode = roomMode;
         PhotonNetwork.CreateRoom(Random.Range(0, 9999).ToString("0000"), roomOptions);
+        loadObject.SetActive(true);
+        loadText.SetText("ルーム作成中・・・");
+    }
+    public void RoomList()
+    {
+        foreach (GameObject obj in clonedList)
+        {
+            Destroy(obj);
+        }
+        clonedList.Clear();
+        foreach (RoomInfo roomInfo in roomList)
+        {
+            RoomPanel newPanel  = Instantiate(clonePrefab,content.transform).GetComponent<RoomPanel>();
+            newPanel.DataSet(roomInfo);
+            newPanel.roomManager = this.gameObject.GetComponent<RoomManager>();
+            clonedList.Add(newPanel.gameObject);
+        }
+    }
+    public void CreateOpenRoom(RoomOptions roomOptions, mode roomMode,string name)
+    {
+        if(name.Length > 10)
+        {
+            errorText.SetActive(true);
+            errorText.GetComponent<TextMeshProUGUI>().SetText("10文字以下にしてください。");
+            return;
+        }
+        if(name == "")
+        {
+            errorText.SetActive(true);
+            errorText.GetComponent<TextMeshProUGUI>().SetText("公開ルールの場合、名前の入力が必須です。");
+            return;
+        }
+        if(FindRoom(name))
+        {
+            errorText.SetActive(true);
+            errorText.GetComponent<TextMeshProUGUI>().SetText("その名前のルームはあります。");
+            return;
+        }
+        errorText.SetActive(false);
+        PhotonNetwork.CreateRoom(name, roomOptions);
         loadObject.SetActive(true);
         loadText.SetText("ルーム作成中・・・");
     }
     public void InRoom(InputPass roomPass)
     {
+       
         PhotonNetwork.JoinRoom(roomPass.GetPass());
         loadObject.SetActive(true);
         loadText.SetText("ルームに接続中・・・");
     }
     public override void OnCreatedRoom()
     {
+
     }
     public override void OnJoinedRoom()
     {
@@ -51,7 +114,15 @@ public class RoomManager : MonoBehaviourPunCallbacks
         loadObject.SetActive(false);
 
         //テキスト
-        roomPas.SetText("ルームパス：" + PhotonNetwork.CurrentRoom.Name);
+        if (PhotonNetwork.CurrentRoom.IsVisible)
+        {
+            roomPas.SetText("ルーム名 : " + PhotonNetwork.CurrentRoom.Name);
+        }
+        else
+        {
+            roomPas.SetText("ルームパス：" + PhotonNetwork.CurrentRoom.Name);
+        }
+
 #if UNITY_EDITOR
         deviceName = "エディター" + PhotonNetwork.CurrentRoom.PlayerCount.ToString();
 #elif UNITY_WEBGL
@@ -62,7 +133,7 @@ public class RoomManager : MonoBehaviourPunCallbacks
         masterText.SetText(deviceName);
         PlaySettings playSettings = this.gameObject.GetComponent<PlaySettings>();
         playSettings.NameSet(PhotonNetwork.CurrentRoom.PlayerCount, deviceName);
-
+        playSettings.SetMode(gamemode);
 
         //同期処理
         FindAnyObjectByType<DeviceView>().View(PhotonNetwork.CurrentRoom.PlayerCount);

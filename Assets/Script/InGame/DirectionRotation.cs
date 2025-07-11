@@ -22,8 +22,9 @@ public class DirectionRotation : MonoBehaviour
     {
 
     }
-    public void DataSet(RaycastHit hit,Vector3 rayDirection)
+    public void DataSet(RaycastHit hit,Vector3 rayDirection,float power)
     {
+        power /= 20;
         inputDirection = hit.normal; //pointerObject.transform.forward;
         inputDirection = inputDirection.normalized;
         inputDirection *= -1;
@@ -44,6 +45,11 @@ public class DirectionRotation : MonoBehaviour
 
         rotatePower = float.Parse(rotatePower.ToString("N2"));
         rotatePower = Normalize(rotatePower);
+        rotatePower -= power;
+        if(rotatePower / 20 < 0f)
+        {
+            rotatePower = 0f;
+        }
         outputDirection = inputDirection.normalized + rayDirection.normalized * (rotatePower/10);
         outputDirection = outputDirection.normalized;
 
@@ -137,7 +143,7 @@ public class DirectionRotation : MonoBehaviour
     }
     public float Power(float power)
     {
-        return power - rotatePower;
+        return power - rotatePower * 1.5f;
     }
 }
 

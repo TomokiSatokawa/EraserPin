@@ -26,6 +26,7 @@ public class MasterServer : MonoBehaviourPunCallbacks
     {
         loadObject.SetActive(false);
         screenChange.OnClick(1);
+        FindAnyObjectByType<StartCameraWork>().TableFocus();
     }
     public override void OnConnectedToMaster()
     {

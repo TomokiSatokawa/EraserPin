@@ -60,7 +60,7 @@ public class CameraWork : MonoBehaviourPunCallbacks
     public void EraserFocus(GameObject target, bool isLeft)
     {
         focusObject.transform.position = target.transform.position;
-        focusObject.transform.LookAt(target.transform.position + pointerControl.GetData() * 10);
+        focusObject.transform.LookAt(target.transform.position + pointerControl.GetData(FindAnyObjectByType<PowerSlider>().GetData()) * 10);
         Vector3 rotation = focusObject.transform.eulerAngles;
         rotation.x = 0;
         rotation.y += 180;

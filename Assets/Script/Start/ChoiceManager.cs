@@ -17,7 +17,6 @@ public class ChoiceManager : MonoBehaviour
         deviceNumber = PlayerPrefs.GetInt("Dnumber");
         ViewPanel();
         nextButton.interactable = true;
-        FindAnyObjectByType<PlaySettings>().Character(deviceNumber, 0);
         waitObj.SetActive(false);
     }
 
@@ -83,6 +82,37 @@ public class ChoiceManager : MonoBehaviour
     {
         nextButton.interactable = false;
         isClick = true;
-        FindAnyObjectByType<PlaySettings>().Character(deviceNumber, 1);
+        int gameMode = (PhotonNetwork.CurrentRoom.CustomProperties["mode"] is int c) ? c : 0;
+        string characterCode = "";
+        if(gameMode == 0)
+        {
+            characterCode += "A";
+        }
+        else
+        {
+            characterCode += "B";
+        }
+
+        int playerCount = (PhotonNetwork.CurrentRoom.CustomProperties["playerCount" + "" + deviceNumber.ToString()] is int p) ? p : 0;
+        int comCount = (PhotonNetwork.CurrentRoom.CustomProperties["comCount" + "" + deviceNumber.ToString()] is int w) ? w : 0;
+        int a = 1;
+        foreach (GameObject panel in panelList)
+        {
+            if (a <= playerCount + comCount)
+            {
+                ChoicePanel choicePanel = panel.GetComponent<ChoicePanel>();
+
+                FindAnyObjectByType<PlaySettings>().Character(choicePanel.GetPlayerNumber(), characterCode + choicePanel.CharacterCode().ToString());
+
+            }
+            else
+            {
+
+                panel.SetActive(false);
+            }
+            a++;
+        }
+
+        
     }
 }

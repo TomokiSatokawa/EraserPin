@@ -26,24 +26,21 @@ public class EraserMove : MonoBehaviourPunCallbacks
         direction.y = 0;
         direction = direction.normalized;
         GameObject targetEraser = FindAnyObjectByType<EraserClone>().cloneEraserObjects[eraserIndex - 1];
-        //direction = targetEraser.transform.TransformPoint(direction);
-        //targetEraser.GetComponent<Rigidbody>().AddForce(direction * power);
-        //hitPosition += targetEraser.transform.up;
-        Vector3 local = targetEraser.transform.InverseTransformPoint(hitPosition);
-        local *= 10;
-        hitPosition = targetEraser.transform.TransformPoint(local);
         Rigidbody rb = targetEraser.GetComponent<Rigidbody>();
         Log.text("Foce" + direction * power);
         rb.AddForce(direction * power/50, ForceMode.Impulse);
-        rb.inertiaTensor = new Vector3(1f, 0.1f, 1f); // Œy‚­‚·‚é•ûŒü‚ð’²®
+        rb.inertiaTensor = new Vector3(1f, 1f, 1f); // Œy‚­‚·‚é•ûŒü‚ð’²®
         rb.inertiaTensorRotation = Quaternion.identity;
-        rb.maxAngularVelocity = 10f;
-        Log.text("Rotate" + rotate * power);
-        if((rotate * power).magnitude >= 100)
+        rb.maxAngularVelocity = 50f;
+        power *= 10;
+        if(power / 10 < 0f)
         {
+            power = 0f;
             rotate = Vector3.zero;
         }
-        rb.AddTorque(rotate * power,ForceMode.Impulse);
+        power /= 20;
+        Log.text("Rotate" + rotate +""+ power);
+        rb.AddTorque(rotate * power, ForceMode.Impulse);
         FindAnyObjectByType<GameManager>().Check();
     }
 }

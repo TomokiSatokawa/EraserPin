@@ -1,12 +1,13 @@
-using System.Collections;
 using System.Collections.Generic;
-using Photon.Pun;
-using Unity.VisualScripting;
 using UnityEngine;
-
-public class KillCheck : MonoBehaviour
+using Photon.Pun;
+using ExitGames.Client.Photon;
+using System.Threading;
+public class KillCheck : MonoBehaviourPunCallbacks
 {
     public GameObject killEffect;
+    private static Hashtable propHash = new Hashtable();
+    public GameManager gameManager;
     // Start is called before the first frame update
     void Start()
     {
@@ -24,9 +25,42 @@ public class KillCheck : MonoBehaviour
         if(hitObject.GetComponent<EraserControlBase>() != null)
         {
             EraserControlBase eraserData = hitObject.GetComponent<EraserControlBase>();
-            Instantiate(killEffect, hitObject.transform.position, Quaternion.identity);
+            PhotonNetwork.Instantiate(killEffect.name, hitObject.transform.position, Quaternion.identity);
             FindAnyObjectByType<GameManager>().Kill(eraserData.playerNumber);
             PhotonNetwork.Destroy(hitObject);
+
+            if (PlayerPrefs.GetInt("Dnumber") == 1)
+            {
+                propHash["ranking" + "" + eraserData.playerNumber] = RemainingPlayer() + 1;
+                PhotonNetwork.CurrentRoom.SetCustomProperties(propHash);
+                propHash.Clear();
+            }
         }
+
+        
     }
+    public int RemainingPlayer()
+    {
+        int count = 0;
+        foreach(GameManager.PlayerData data in gameManager.playerList)//êÊÇ…GM.KillÇµÇƒÇ¢ÇÈ
+        {
+            if (data.isAlive)
+            {
+                count++;
+            }
+        }
+        Debug.Log(count);
+        return count;
+    }
+    public void Winner(int playerNumber)
+    {
+        if(playerNumber == 0)
+        {
+            Debug.LogError("Player == 0");
+        }
+        propHash["ranking" + "" + playerNumber] = 1;
+        PhotonNetwork.CurrentRoom.SetCustomProperties(propHash);
+        propHash.Clear();
+    }
+
 }

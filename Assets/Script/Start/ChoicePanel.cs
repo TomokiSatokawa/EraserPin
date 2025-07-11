@@ -11,7 +11,7 @@ public class ChoicePanel : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        stepper.playerNumber = playerNumber;
     }
 
     // Update is called once per frame
@@ -22,5 +22,13 @@ public class ChoicePanel : MonoBehaviour
     public void SetName(int number)
     {
         nameText.SetText(number.ToString() + "P");
+    }
+    public int GetPlayerNumber()
+    {
+        return playerNumber;
+    }
+    public int CharacterCode()
+    {
+        return stepper.GetData();
     }
 }

@@ -9,7 +9,7 @@ public class StopCheck : MonoBehaviour
     public List<Vector3> beforeFramePositions = new List<Vector3>();
     public GameObject gameMasterPhotonView;
     public bool isStop = false;
-    public   bool isCheck = false;
+    public bool isCheck = false;
     private float timer;
     // Start is called before the first frame update
     void Start()
@@ -30,7 +30,7 @@ public class StopCheck : MonoBehaviour
             timer += Time.deltaTime;
             return;
         }
-       
+
 
 
         isStop = true;
@@ -43,7 +43,7 @@ public class StopCheck : MonoBehaviour
                 break;
             }
             Vector3 eraserPosition;
-            if(eraser == null)
+            if (eraser == null)
             {
                 eraserPosition = Vector3.zero;
             }
@@ -51,7 +51,7 @@ public class StopCheck : MonoBehaviour
             {
                 eraserPosition = eraser.transform.position;
             }
-            bool a = Vector3.Distance(beforeFramePositions[i], eraserPosition)  == 0f;
+            bool a = Vector3.Distance(beforeFramePositions[i], eraserPosition) == 0f;
             if (a)
             {
                 //Debug.Log(eraser.name + "" + Vector3.Distance(beforeFramePositions[i], eraser.transform.position));
@@ -66,7 +66,7 @@ public class StopCheck : MonoBehaviour
         beforeFramePositions.Clear();
         foreach (GameObject eraser in eraserClone.cloneEraserObjects)
         {
-            if(eraser == null)
+            if (eraser == null)
             {
                 beforeFramePositions.Add(Vector3.zero);
                 continue;
@@ -82,7 +82,15 @@ public class StopCheck : MonoBehaviour
 
         if (isStop)
         {
-            //gameMasterPhotonView.GetComponent<PhotonView>().RPC("NextTurn", RpcTarget.All);
+            ////gameMasterPhotonView.GetComponent<PhotonView>().RPC("NextTurn", RpcTarget.All);
+            foreach (GameObject eraser in eraserClone.cloneEraserObjects)
+            {
+                if (eraser == null)
+                {
+                    continue;
+                }
+                eraser.GetComponent<EraserControlBase>().StopProcess();
+            }
             FindAnyObjectByType<GameManager>().NextTurn();
             isCheck = false;
         }

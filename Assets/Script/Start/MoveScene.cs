@@ -26,7 +26,7 @@ public class MoveScene : MonoBehaviourPunCallbacks
     }
     public void NextButton()
     {
-        photonView.RPC(nameof(Move), RpcTarget.All, selectCard.stageSceneName);
+        photonView.RPC(nameof(Move), RpcTarget.All, selectCard.stageData.sceneName);
     }
     [PunRPC]
     public void Move(string name)

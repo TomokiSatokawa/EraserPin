@@ -97,19 +97,19 @@ public class PointerControl : MonoBehaviour
         vector = local.normalized;
         vector *= -1;
     }
-    public Vector3 GetData()
+    public Vector3 GetData(float Power)
     {
-        directionRotation.DataSet(hitEraser, pointerObject.transform.forward);
+        directionRotation.DataSet(hitEraser, pointerObject.transform.forward,Power);
         return directionRotation.GetDirection();
     }
-    public Vector3 GetRotate()
+    public Vector3 GetRotate(float Power)
     {
-        directionRotation.DataSet(hitEraser, pointerObject.transform.forward);
+        directionRotation.DataSet(hitEraser, pointerObject.transform.forward, Power);
         return directionRotation.GetRotation();
     }
     public float GetPower(float Power)
     {
-        directionRotation.DataSet(hitEraser, pointerObject.transform.forward);
+        directionRotation.DataSet(hitEraser, pointerObject.transform.forward,Power);
         return  directionRotation.Power(Power);
     }
     public Vector3 GetHitPosition()

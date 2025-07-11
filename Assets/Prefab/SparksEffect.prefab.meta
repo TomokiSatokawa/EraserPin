@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 5a820ef9f17b3cf429aa0c40f7b5a386
+timeCreated: 1473691359
+licenseType: Store
+NativeFormatImporter:
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 73777
+  packageName: Legacy Particle Pack
+  packageVersion: 3.0
+  assetPath: Assets/UnityTechnologies/EffectExamples/Misc Effects/Prefabs/SparksEffect.prefab
+  uploadId: 680137

@@ -18,6 +18,7 @@ public class EraserClone : MonoBehaviourPunCallbacks
     [SerializeField] public List<ClonePosition> positionList = new List<ClonePosition>();
     public GameObject eraserPrefab;
     public ColorData colorData;
+    public CharacterDataList characterDataList;
     public TextMeshProUGUI textMeshProUGUI;
     public List<GameObject> cloneEraserObjects = new List<GameObject>();
     // Start is called before the first frame update
@@ -84,9 +85,22 @@ public class EraserClone : MonoBehaviourPunCallbacks
         int i = 0;
         foreach(GameObject position in SwitchPlayerPosition().positionObject)
         {
-            GameObject newEraser =PhotonNetwork.Instantiate(eraserPrefab.name, position.transform.position, position.transform.rotation);
+            string CharacterCode = (string)PhotonNetwork.CurrentRoom.CustomProperties["character" + (i+1).ToString()];
+            string gameMode = CharacterCode[0].ToString();
+            int Index = int.Parse(CharacterCode.Substring(1));
+            GameObject clonePrefab;
+            Debug.Log(i + " : " + Index);
+            if (CharacterCode[0] == 'A')
+            {
+                clonePrefab = characterDataList.normalEraser[Index].characterPrefab;
+            }
+            else
+            {
+                clonePrefab = characterDataList.hardEraser[Index].characterPrefab;
+            }
+            GameObject newEraser =PhotonNetwork.Instantiate(clonePrefab.name, position.transform.position, position.transform.rotation);
             newEraser.name += i.ToString();
-            newEraser.GetComponent<EraserControl>().ChangeColor(colorData.activeColorPackage[i]);
+            newEraser.GetComponent<EraserControlBase>().ChangeColor(colorData.activeColorPackage[i]);
             EraserControlBase controlBase = newEraser.GetComponent<EraserControlBase>();
             controlBase.playerNumber = i + 1;
             cloneEraserObjects.Add(newEraser);

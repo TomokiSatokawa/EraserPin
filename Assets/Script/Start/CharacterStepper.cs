@@ -1,14 +1,26 @@
 using System.Collections;
 using System.Collections.Generic;
+using Photon.Pun;
 using UnityEngine;
 
 public class CharacterStepper : StepperControl
 {
     public CharacterDataList characterDataList;
+    public int playerNumber;
+    private List<CharacterData> list;
     // Start is called before the first frame update
     void Start()
     {
-        maxValue = characterDataList.dataList.Count -1;
+        int gameMode = (PhotonNetwork.CurrentRoom.CustomProperties["mode"] is int c) ? c : 0;
+        if (gameMode == 0)
+        {
+            list = characterDataList.normalEraser;
+        }
+        else
+        {
+            list = characterDataList.hardEraser;
+        }
+        maxValue = list.Count -1;
         minValue = 0;
         ViewText();
     }
@@ -20,6 +32,6 @@ public class CharacterStepper : StepperControl
     }
     public override void ViewText()
     {
-        text.text = characterDataList.dataList[value].name;
+        text.text = list[value].eraserName;
     }
 }

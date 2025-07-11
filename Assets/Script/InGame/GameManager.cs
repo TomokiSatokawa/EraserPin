@@ -14,6 +14,7 @@ public class GameManager : MonoBehaviourPunCallbacks, IPunObservable
     public PowerSlider powerSlider;
     public StopCheck stopCheck;
     public ScrollbarControl scrollbarControl;
+    public KillCheck killCheck;
     public GameObject eraserMove;
     public GameObject cameraPhotonView;
     public ColorData colorData;
@@ -76,16 +77,21 @@ public class GameManager : MonoBehaviourPunCallbacks, IPunObservable
         turn++;
         //Debug.Log(turn);
         int aliveCount = 0;
+        int winner = 0;
+        int i  = 0;
         foreach(PlayerData playerData in playerList)
         {
             if (playerData.isAlive)
             {
+                winner = i + 1;
                 aliveCount++;
             }
+            i++;
         }
         if(aliveCount == 1)
         {
             Debug.Log("Clear");
+            killCheck.Winner(winner);
             cameraPhotonView.GetComponent<PhotonView>().RPC("Result", RpcTarget.All);
             return;
         }
@@ -122,10 +128,10 @@ public class GameManager : MonoBehaviourPunCallbacks, IPunObservable
     }
     public void Move()
     {
-        Vector3 direction = pointerControl.GetData();
-        Vector3 hitPosition = pointerControl.GetHitPosition();
-        Vector3 rotate = pointerControl.GetRotate();
         float power = powerSlider.GetData();
+        Vector3 direction = pointerControl.GetData(power);
+        Vector3 hitPosition = pointerControl.GetHitPosition();
+        Vector3 rotate = pointerControl.GetRotate(power);
         power = pointerControl.GetPower(power);
         eraserMove.GetComponent<PhotonView>().RPC("Move",RpcTarget.All,turn,power,direction,rotate,hitPosition);
         
@@ -156,14 +162,7 @@ public class GameManager : MonoBehaviourPunCallbacks, IPunObservable
     }
     public void Ranking()
     {
-        List<int> rank = new List<int>();
-        int i = 1;
-        foreach (PlayerData playerNumber in playerList)
-        {
-            rank.Add(i);
-            i++;
-        }
-        scrollbarControl.View(playerList, rank);
+        scrollbarControl.View(playerList);
     }
 }
 
