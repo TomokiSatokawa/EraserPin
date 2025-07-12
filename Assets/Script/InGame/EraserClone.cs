@@ -49,10 +49,8 @@ public class EraserClone : MonoBehaviourPunCallbacks
             return;
 
         }
-
-        GameObject[] erasers = GameObject.FindGameObjectsWithTag("Eraser");
         int i = 0;
-        foreach (GameObject eraser in erasers)
+        foreach (GameObject eraser in FindAnyObjectByType<EraserClone>().cloneEraserObjects) 
         {
             eraser.GetComponent<EraserControl>().ChangeColor(colorData.activeColorPackage[i]);
             cloneEraserObjects.Add(eraser);

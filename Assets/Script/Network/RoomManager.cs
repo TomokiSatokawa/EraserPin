@@ -103,7 +103,7 @@ public class RoomManager : MonoBehaviourPunCallbacks
     }
     public override void OnCreatedRoom()
     {
-
+        FindAnyObjectByType<PlaySettings>().SetMode(gamemode);
     }
     public override void OnJoinedRoom()
     {
@@ -133,7 +133,7 @@ public class RoomManager : MonoBehaviourPunCallbacks
         masterText.SetText(deviceName);
         PlaySettings playSettings = this.gameObject.GetComponent<PlaySettings>();
         playSettings.NameSet(PhotonNetwork.CurrentRoom.PlayerCount, deviceName);
-        playSettings.SetMode(gamemode);
+        
 
         //ìØä˙èàóù
         FindAnyObjectByType<DeviceView>().View(PhotonNetwork.CurrentRoom.PlayerCount);
