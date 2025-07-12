@@ -88,7 +88,7 @@ public class GameManager : MonoBehaviourPunCallbacks, IPunObservable
             }
             i++;
         }
-        if(aliveCount == 1)
+        if(aliveCount <= 1)
         {
             Debug.Log("Clear");
             killCheck.Winner(winner);

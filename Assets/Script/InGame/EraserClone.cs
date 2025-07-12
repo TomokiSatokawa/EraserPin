@@ -120,7 +120,5 @@ public class EraserClone : MonoBehaviourPunCallbacks
         }
         return total;
     }
-
-
 }
 

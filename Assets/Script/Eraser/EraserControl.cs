@@ -16,5 +16,8 @@ public class EraserControl : EraserControlBase
     {
         
     }
-    
+    public override void StopProcess()
+    {
+        FindAnyObjectByType<StopCheck>().EffectCheck(playerNumber);
+    }
 }

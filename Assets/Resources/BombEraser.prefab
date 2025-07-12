@@ -68,7 +68,10 @@ MonoBehaviour:
   coverObject: {fileID: 3563189037531546919}
   handPosition: {fileID: 3412644324332497440}
   moveAmount: 0
-  maxAmount: 3
+  maxAmount: 2
+  bombRange: 10
+  flyPower: 3
+  effectObject: {fileID: 868123877224072900, guid: 4152fc48a7746634a846ad66dcf5779e, type: 3}
 --- !u!114 &710722644110444037
 MonoBehaviour:
   m_ObjectHideFlags: 0

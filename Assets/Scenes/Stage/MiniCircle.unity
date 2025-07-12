@@ -3588,8 +3588,10 @@ MonoBehaviour:
   eraserClone: {fileID: 66577385}
   beforeFramePositions: []
   gameMasterPhotonView: {fileID: 66577384}
+  effectCheck: 
   isStop: 0
   isCheck: 0
+  effectWait: 0
 --- !u!114 &1348626124
 MonoBehaviour:
   m_ObjectHideFlags: 0

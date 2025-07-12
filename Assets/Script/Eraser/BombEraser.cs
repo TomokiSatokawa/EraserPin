@@ -6,6 +6,9 @@ public class BombEraser : EraserControlBase
 {
     public float moveAmount;
     public float maxAmount;
+    public float bombRange;
+    public float flyPower;
+    public GameObject effectObject;
     private Vector3 eraserPosition;
     // Update is called once per frame
     void Update()
@@ -25,9 +28,29 @@ public class BombEraser : EraserControlBase
             Explosion();
         }
         eraserPosition = this.transform.position;
+        FindAnyObjectByType<StopCheck>().EffectCheck(playerNumber);
     }
     public void Explosion()
     {
         Debug.Log("”š”­");
+        foreach(GameObject eraser in FindAnyObjectByType<EraserClone>().cloneEraserObjects)
+        {
+            if(eraser == this.gameObject || eraser == null)
+            {
+                continue;
+            }
+            if(Vector3.Distance(eraser.transform.position,this.transform.position) <= bombRange)
+            {
+                //•ûŒü * ã
+                Vector3 direction = eraser.transform.position - this.transform.position;
+                direction = direction.normalized;
+                direction += Vector3.up * flyPower;
+                direction /= 8;
+                Log.text("”š•— : " + direction);
+                eraser.GetComponent<Rigidbody>().AddForce(direction, ForceMode.Impulse);
+                eraser.GetComponent<Rigidbody>().AddTorque(new Vector3(Random.Range(90, 360), Random.Range(90, 360), Random.Range(90, 360)),ForceMode.Impulse);
+            }
+        }
+        Instantiate(effectObject, this.transform.position, Quaternion.identity);
     }
 }
