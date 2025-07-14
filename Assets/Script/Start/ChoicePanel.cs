@@ -7,11 +7,12 @@ public class ChoicePanel : MonoBehaviour
 {
     public CharacterStepper stepper;
     public TextMeshProUGUI nameText;
+    public int localPlayerNumber;
     public int playerNumber;
     // Start is called before the first frame update
     void Start()
     {
-        stepper.playerNumber = playerNumber;
+        stepper.playerNumber = localPlayerNumber;
     }
 
     // Update is called once per frame
@@ -22,6 +23,7 @@ public class ChoicePanel : MonoBehaviour
     public void SetName(int number)
     {
         nameText.SetText(number.ToString() + "P");
+        playerNumber = number;
     }
     public int GetPlayerNumber()
     {

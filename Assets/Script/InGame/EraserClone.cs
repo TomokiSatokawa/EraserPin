@@ -44,15 +44,26 @@ public class EraserClone : MonoBehaviourPunCallbacks
     // Update is called once per frame
     void Update()
     {
-        if (PlayerPrefs.GetInt("Dnumber") == 1 || cloneEraserObjects.Count != 0)
+        if(PlayerPrefs.GetInt("AllPlayer") == 0)
+        {
+            int playerCount = 0;
+            for (int a = 1; a <= PhotonNetwork.CurrentRoom.PlayerCount; a++)
+            {
+                playerCount += (PhotonNetwork.CurrentRoom.CustomProperties["playerCount" + "" + a] is int op) ? op : 0;
+                playerCount += (PhotonNetwork.CurrentRoom.CustomProperties["comCount" + "" + a] is int oc) ? oc : 0;
+            }
+            PlayerPrefs.SetInt("AllPlayer", playerCount);
+        }
+        if (PlayerPrefs.GetInt("Dnumber") == 1 || cloneEraserObjects.Count == PlayerPrefs.GetInt("AllPlayer"))
         {
             return;
 
         }
+        Debug.Log("ColorChange");
         int i = 0;
-        foreach (GameObject eraser in FindAnyObjectByType<EraserClone>().cloneEraserObjects) 
-        {
-            eraser.GetComponent<EraserControl>().ChangeColor(colorData.activeColorPackage[i]);
+        foreach (GameObject eraser in GameObject.FindGameObjectsWithTag("Eraser")) 
+        {//名前の最後をループカウンターに
+            eraser.GetComponent<EraserControlBase>().ChangeColor(colorData.activeColorPackage[i]);
             cloneEraserObjects.Add(eraser);
             i++;
         }
@@ -84,7 +95,8 @@ public class EraserClone : MonoBehaviourPunCallbacks
         foreach(GameObject position in SwitchPlayerPosition().positionObject)
         {
             string CharacterCode = (string)PhotonNetwork.CurrentRoom.CustomProperties["character" + (i+1).ToString()];
-            string gameMode = CharacterCode[0].ToString();
+            Debug.Log(CharacterCode);
+            string gameMode = CharacterCode[0].ToString();//null
             int Index = int.Parse(CharacterCode.Substring(1));
             GameObject clonePrefab;
             Debug.Log(i + " : " + Index);

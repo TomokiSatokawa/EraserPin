@@ -20,7 +20,7 @@ public class RoomManager : MonoBehaviourPunCallbacks
     private string deviceName;
     private List<RoomInfo> roomList;
     private List<GameObject> clonedList = new List<GameObject>();
-    private RoomManager.mode gamemode;
+    private mode gamemode;
     public enum mode
     {
         Normal,Hard
@@ -49,6 +49,7 @@ public class RoomManager : MonoBehaviourPunCallbacks
     }
     public void CreateRandomRoom(RoomOptions roomOptions,mode roomMode)
     {
+        Debug.Log("Create mode : " + roomOptions);
         gamemode = roomMode;
         PhotonNetwork.CreateRoom(Random.Range(0, 9999).ToString("0000"), roomOptions);
         loadObject.SetActive(true);
@@ -71,7 +72,7 @@ public class RoomManager : MonoBehaviourPunCallbacks
     }
     public void CreateOpenRoom(RoomOptions roomOptions, mode roomMode,string name)
     {
-        if(name.Length > 10)
+        if (name.Length > 10)
         {
             errorText.SetActive(true);
             errorText.GetComponent<TextMeshProUGUI>().SetText("10文字以下にしてください。");
@@ -89,6 +90,7 @@ public class RoomManager : MonoBehaviourPunCallbacks
             errorText.GetComponent<TextMeshProUGUI>().SetText("その名前のルームはあります。");
             return;
         }
+        gamemode = roomMode;
         errorText.SetActive(false);
         PhotonNetwork.CreateRoom(name, roomOptions);
         loadObject.SetActive(true);
@@ -103,6 +105,7 @@ public class RoomManager : MonoBehaviourPunCallbacks
     }
     public override void OnCreatedRoom()
     {
+        
         FindAnyObjectByType<PlaySettings>().SetMode(gamemode);
     }
     public override void OnJoinedRoom()

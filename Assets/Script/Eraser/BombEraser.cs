@@ -1,7 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using Photon.Pun;
+using UnityEngine.UI;
+using DG.Tweening;
 public class BombEraser : EraserControlBase
 {
     public float moveAmount;
@@ -9,6 +11,7 @@ public class BombEraser : EraserControlBase
     public float bombRange;
     public float flyPower;
     public GameObject effectObject;
+    public Slider moveAmountSlider;
     private Vector3 eraserPosition;
     // Update is called once per frame
     void Update()
@@ -19,18 +22,25 @@ public class BombEraser : EraserControlBase
     {
         moveAmount = 0;
         eraserPosition = this.transform.position;
+        moveAmountSlider.value = 0;
+        moveAmountSlider.maxValue = maxAmount;
     }
     public override void StopProcess()
     {
         moveAmount += Vector3.Distance(eraserPosition, this.transform.position);
+        moveAmountSlider.DOValue(moveAmount, 1f).OnComplete(ValueCheck);
+    }
+    public void ValueCheck()
+    {
         if (moveAmount > maxAmount)
         {
-            Explosion();
+            photonView.RPC(nameof(Explosion), RpcTarget.All, playerNumber);
         }
         eraserPosition = this.transform.position;
         FindAnyObjectByType<StopCheck>().EffectCheck(playerNumber);
     }
-    public void Explosion()
+    [PunRPC]
+    public void Explosion(int playerNumber)
     {
         Debug.Log("”š”­");
         foreach(GameObject eraser in FindAnyObjectByType<EraserClone>().cloneEraserObjects)

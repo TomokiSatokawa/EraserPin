@@ -1,9 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
+using Photon.Pun;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class EraserControlBase : MonoBehaviour
+public class EraserControlBase : MonoBehaviourPunCallbacks
 {
     public int playerNumber;
     public GameObject TopPosition;
@@ -28,7 +29,7 @@ public class EraserControlBase : MonoBehaviour
         return TopPosition.transform.position.y;
     }
     public virtual void StopProcess() { }
-    public virtual void ChangeColor(Color color)
+    public void ChangeColor(Color color)
     {
         coverObject.GetComponent<MeshRenderer>().material.color = color;
     }

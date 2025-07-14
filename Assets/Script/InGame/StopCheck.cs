@@ -27,7 +27,7 @@ public class StopCheck : MonoBehaviour
             return;
         }
 
-        if (timer < 0.5f)
+        if (timer < 1f)
         {
             timer += Time.deltaTime;
             return;
@@ -81,7 +81,7 @@ public class StopCheck : MonoBehaviour
             timer += Time.deltaTime;
             return;
         }
-        AliveCheck();
+        //AliveCheck();
         bool checker = true;
         foreach (bool b in effectCheck)
         {
@@ -100,6 +100,9 @@ public class StopCheck : MonoBehaviour
 
         if (isStop && !effectWait)
         {
+            effectWait = true;
+            timer = 0f;
+            isStop = false;
             ////gameMasterPhotonView.GetComponent<PhotonView>().RPC("NextTurn", RpcTarget.All);
             foreach (GameObject eraser in eraserClone.cloneEraserObjects)
             {
@@ -108,8 +111,7 @@ public class StopCheck : MonoBehaviour
                     continue;
                 }
                 eraser.GetComponent<EraserControlBase>().StopProcess();
-                effectWait = true;
-                timer = 0f;
+                
             }
             return;
 
