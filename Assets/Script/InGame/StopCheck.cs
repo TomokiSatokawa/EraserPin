@@ -26,6 +26,12 @@ public class StopCheck : MonoBehaviour
         {
             return;
         }
+        isEraserStop();
+        if (!isStop)
+        {
+            timer = 0f;
+            return;
+        }
 
         if (timer < 1f)
         {
@@ -33,72 +39,9 @@ public class StopCheck : MonoBehaviour
             return;
         }
 
+        
 
-
-        isStop = true;
-        int i = 0;
-        foreach (GameObject eraser in eraserClone.cloneEraserObjects)
-        {
-            if (beforeFramePositions.Count == 0)
-            {
-                isStop = false;
-                break;
-            }
-            Vector3 eraserPosition;
-            if (eraser == null)
-            {
-                eraserPosition = Vector3.zero;
-            }
-            else
-            {
-                eraserPosition = eraser.transform.position;
-            }
-            bool a = Vector3.Distance(beforeFramePositions[i], eraserPosition) == 0f;
-            if (a)
-            {
-                //Debug.Log(eraser.name + "" + Vector3.Distance(beforeFramePositions[i], eraser.transform.position));
-            }
-            isStop = isStop && a;
-            if (!isStop)
-            {
-                //Debug.Log(eraser);
-            }
-            i++;
-        }
-        beforeFramePositions.Clear();
-        foreach (GameObject eraser in eraserClone.cloneEraserObjects)
-        {
-            if (eraser == null)
-            {
-                beforeFramePositions.Add(Vector3.zero);
-                continue;
-            }
-            beforeFramePositions.Add(eraser.transform.position);
-        }
-
-        if (isStop && timer < 2f)
-        {
-            timer += Time.deltaTime;
-            return;
-        }
-        //AliveCheck();
-        bool checker = true;
-        foreach (bool b in effectCheck)
-        {
-            if (!b)
-            {
-                checker = false;
-            }
-        }
-
-        if (isStop && checker)
-        {
-            FindAnyObjectByType<GameManager>().NextTurn();
-            isCheck = false;
-            return;
-        }
-
-        if (isStop && !effectWait)
+        if (!effectWait)//効果実行
         {
             effectWait = true;
             timer = 0f;
@@ -117,6 +60,23 @@ public class StopCheck : MonoBehaviour
 
            
         }
+
+        bool checker = true;
+        foreach (bool b in effectCheck)
+        {
+            if (!b)
+            {
+                checker = false;
+            }
+        }
+
+        if (checker)//ターンエンド
+        {
+            FindAnyObjectByType<GameManager>().NextTurn();
+            isCheck = false;
+            return;
+        }
+
     }
     public void Check()
     {
@@ -144,6 +104,55 @@ public class StopCheck : MonoBehaviour
     public void EffectCheck(int playerNumber)
     {
         effectCheck[playerNumber -1] = true;
+        timer = 0f;
+    }
+    public  void isEraserStop()
+    {
+
+
+        bool Stop = true;
+        int i = 0;
+        foreach (GameObject eraser in eraserClone.cloneEraserObjects)
+        {
+            if (beforeFramePositions.Count == 0)
+            {
+                Stop = false;
+                break;
+            }
+            Vector3 eraserPosition;
+            if (eraser == null)
+            {
+                eraserPosition = Vector3.zero;
+            }
+            else
+            {
+                eraserPosition = eraser.transform.position;
+            }
+            bool a = Vector3.Distance(beforeFramePositions[i], eraserPosition) == 0f;
+            if (a)
+            {
+                //Debug.Log(eraser.name + "" + Vector3.Distance(beforeFramePositions[i], eraser.transform.position));
+            }
+            Stop = Stop && a;
+            if (!isStop)
+            {
+                //Debug.Log(eraser);
+            }
+            i++;
+        }
+
+        beforeFramePositions.Clear();
+        foreach (GameObject eraser in eraserClone.cloneEraserObjects)
+        {
+            if (eraser == null)
+            {
+                beforeFramePositions.Add(Vector3.zero);
+                continue;
+            }
+            beforeFramePositions.Add(eraser.transform.position);
+        }
+
+        isStop = Stop;
     }
 
 }
