@@ -60,7 +60,7 @@ public class StopCheck : MonoBehaviour
 
            
         }
-
+        AliveCheck();
         bool checker = true;
         foreach (bool b in effectCheck)
         {
@@ -97,6 +97,7 @@ public class StopCheck : MonoBehaviour
             if (!data.isAlive)
             {
                 effectCheck[i] = true;
+                timer = 0f;
             }
             i++;
         }

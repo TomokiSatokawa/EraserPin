@@ -11,4 +11,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Stage/MiniCircle.unity
     guid: f88ba1b1b44590c49b7d3816be00332b
+  - enabled: 1
+    path: Assets/Scenes/Stage/MiniTriangle.unity
+    guid: 3ca78a5b590b06845afaa8a31c38b9f1
   m_configObjects: {}
