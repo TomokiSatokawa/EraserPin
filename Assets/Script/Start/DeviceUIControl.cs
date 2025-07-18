@@ -4,12 +4,14 @@ using UnityEngine;
 using Photon.Pun;
 using TMPro;
 using Unity.VisualScripting;
+using System;
 public class DeviceUIControl : MonoBehaviourPunCallbacks
 {
     public int deviceNumber;
     public TextMeshProUGUI deviceText;
     public List<EraserUIControl> eraserUIs;
     public GameObject readyRavel;
+    public GameObject Outline;
     // Start is called before the first frame update
     void Start()
     {
@@ -88,5 +90,9 @@ public class DeviceUIControl : MonoBehaviourPunCallbacks
                 eraserUIs[3].IsCom(true);
             }
         }
+    }
+    public void ActiveOutline(bool b)
+    {
+        //Outline.SetActive(b);
     }
 }

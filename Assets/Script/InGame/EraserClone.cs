@@ -95,11 +95,11 @@ public class EraserClone : MonoBehaviourPunCallbacks
         foreach(GameObject position in SwitchPlayerPosition().positionObject)
         {
             string CharacterCode = (string)PhotonNetwork.CurrentRoom.CustomProperties["character" + (i+1).ToString()];
-            Debug.Log(CharacterCode);
+            Debug.Log( i + "" + CharacterCode);
             string gameMode = CharacterCode[0].ToString();//null
             int Index = int.Parse(CharacterCode.Substring(1));
             GameObject clonePrefab;
-            Debug.Log(i + " : " + Index);
+            //Debug.Log(i + " : " + Index);
             if (CharacterCode[0] == 'A')
             {
                 clonePrefab = characterDataList.normalEraser[Index].characterPrefab;

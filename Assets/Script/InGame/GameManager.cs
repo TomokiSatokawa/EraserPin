@@ -18,12 +18,14 @@ public class GameManager : MonoBehaviourPunCallbacks, IPunObservable
     public GameObject eraserMove;
     public GameObject cameraPhotonView;
     public ColorData colorData;
+    public CharacterDataList characterDataList;
     [System.Serializable]public class PlayerData
     {
         public int deviceNumber;
         public bool isComputer;
         public bool isAlive = true;
         public int computerLevel = 0;
+        public CharacterData eraserData;
     }
     [SerializeField] public List<PlayerData> playerList = new List<PlayerData>();
     private static Hashtable propHash = new Hashtable();
@@ -34,12 +36,13 @@ public class GameManager : MonoBehaviourPunCallbacks, IPunObservable
         turn = 1;
         deviceNumber = PlayerPrefs.GetInt("Dnumber");
         isOperation = deviceNumber == 1;
-
+        FindAnyObjectByType<PlayerListControl>().Clone(playerList);
 
     }
     public void GetPlayerData()
     {
         playerList.Clear();
+        int playerNumber = 1;
         for (int i = 1; i <= PhotonNetwork.CurrentRoom.PlayerCount; i++)
         {
             int playerCount = (PhotonNetwork.CurrentRoom.CustomProperties["playerCount" + "" + i.ToString()] is int x) ? x : 0;
@@ -49,7 +52,9 @@ public class GameManager : MonoBehaviourPunCallbacks, IPunObservable
                 playerData.deviceNumber = i;
                 playerData.isComputer = false;
                 playerData.computerLevel = 0;
+                playerData.eraserData = GetEraserData(i);
                 playerList.Add(playerData);
+                playerNumber++;
             }
             int comCount = (PhotonNetwork.CurrentRoom.CustomProperties["comCount" + "" + i.ToString()] is int y) ? y : 0;
             for (int c = 0; c < comCount; c++)
@@ -58,14 +63,35 @@ public class GameManager : MonoBehaviourPunCallbacks, IPunObservable
                 playerData.deviceNumber = i;
                 playerData.isComputer = true;
                 playerData.computerLevel = 1;
+                playerData.eraserData = GetEraserData(i);
                 playerList.Add(playerData);
+                playerNumber++;
             }
+        }
+    }
+    public CharacterData GetEraserData(int i)
+    {
+        string CharacterCode = (string)PhotonNetwork.CurrentRoom.CustomProperties["character" + (i).ToString()];
+        Debug.Log( i+""+CharacterCode);
+        string gameMode = CharacterCode[0].ToString();//null
+        int Index = int.Parse(CharacterCode.Substring(1));
+        if (CharacterCode[0] == 'A')
+        {
+            return characterDataList.normalEraser[Index];
+        }
+        else
+        {
+            return characterDataList.hardEraser[Index];
         }
     }
     [PunRPC]
     public void Turn(int playerNumber)
     {
         turn = playerNumber;
+        foreach (EraserIcon eraserIcon in FindObjectsOfType<EraserIcon>())
+        {
+            eraserIcon.ActiveOutline(turn);
+        }
         frameControl.ChangeColor(colorData.activeColorPackage[turn -1],turn);
         frameControl.Active(true);
         cameraWork.TopFocus();

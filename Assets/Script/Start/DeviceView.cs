@@ -20,6 +20,9 @@ public class DeviceView : MonoBehaviourPunCallbacks
     private bool ready = false;
     private bool isInRoom = false;
     public TextMeshProUGUI textMeshProUGUI;
+    public TextMeshProUGUI roomPass;
+    public TextMeshProUGUI roomTitle;
+    public TextMeshProUGUI gameMode;
     public void Awake()
     {
         foreach (GameObject obj in deviceUIObject)
@@ -32,6 +35,7 @@ public class DeviceView : MonoBehaviourPunCallbacks
         nextButton.interactable = true;
         nextWindowButton.SetActive(false) ;
         CountChange();
+        SetRoomOption();
     }
 
 
@@ -77,7 +81,7 @@ public class DeviceView : MonoBehaviourPunCallbacks
     }
     public void OutLine(int playerNumber)
     {
-        deviceUIObject[playerNumber - 1].GetComponent<Outline>().enabled = true;
+        deviceUIObject[playerNumber - 1].GetComponent<DeviceUIControl>().ActiveOutline(true);
     }
     public void StpperClick()
     {
@@ -162,5 +166,10 @@ public class DeviceView : MonoBehaviourPunCallbacks
             PlayerPrefs.SetInt("Dnumber", _deviceNumber);
             PlayerPrefs.Save();
         }
+    }
+    public void SetRoomOption()
+    {
+        roomPass.text = PhotonNetwork.CurrentRoom.Name;
+        roomTitle.text = PlayerPrefs.GetString("IsVisible");
     }
 }

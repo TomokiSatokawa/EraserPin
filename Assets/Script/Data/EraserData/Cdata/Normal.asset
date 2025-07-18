@@ -14,3 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   eraserName: "\u666E\u901A\u306E\u6D88\u3057\u30B4\u30E0"
   characterPrefab: {fileID: 6605304869885609200, guid: f5f14ad7a51df614098daf34ad9ea28a, type: 3}
+  bodyImage: {fileID: 21300000, guid: 6f019cf1ac32bd2478b221f2eb4e32ee, type: 3}
+  coverImage: {fileID: 21300000, guid: 7cb8d7a71b569a447b09445aa0ea8d60, type: 3}
+  decoration: {fileID: 21300000, guid: afab2b869267b524aaac552b68b9963f, type: 3}

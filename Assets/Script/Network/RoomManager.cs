@@ -119,11 +119,11 @@ public class RoomManager : MonoBehaviourPunCallbacks
         //テキスト
         if (PhotonNetwork.CurrentRoom.IsVisible)
         {
-            roomPas.SetText("ルーム名 : " + PhotonNetwork.CurrentRoom.Name);
+            PlayerPrefs.SetString("IsVisible", "ルーム名");
         }
         else
         {
-            roomPas.SetText("ルームパス：" + PhotonNetwork.CurrentRoom.Name);
+            PlayerPrefs.SetString("IsVisible", "ルームパス");
         }
 
 #if UNITY_EDITOR
