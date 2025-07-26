@@ -44,7 +44,6 @@ public class PlaySettings : MonoBehaviourPunCallbacks
     }
     public void Ready(int deviceNumber, int iNum)
     {
-        Debug.Log(deviceNumber + "," + iNum);
         propHash["ready" + "" + deviceNumber.ToString()] = iNum;
         propHash["Load" + "" + deviceNumber.ToString()] = false;
         PhotonNetwork.CurrentRoom.SetCustomProperties(propHash);
@@ -52,22 +51,22 @@ public class PlaySettings : MonoBehaviourPunCallbacks
     }
     public void Character(int deviceNumber, string iNum)
     {
-        Debug.Log(deviceNumber + "" +  iNum);
         propHash["character" + "" + deviceNumber.ToString()] = iNum;
         PhotonNetwork.CurrentRoom.SetCustomProperties(propHash);
         propHash.Clear();
     }
     public void SetMode(RoomManager.mode mode)
     {
-        Debug.Log("mode : " + mode);
         if (mode == RoomManager.mode.Normal)
         {
             propHash["mode"] = 0;
+            PlayerPrefs.SetString("mode", "ノーマル");
 
         }
         else
         {
             propHash["mode"] = 1;
+            PlayerPrefs.SetString("mode", "ハード");
         }
         PhotonNetwork.CurrentRoom.SetCustomProperties(propHash);
     }

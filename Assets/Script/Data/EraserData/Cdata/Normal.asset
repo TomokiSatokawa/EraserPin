@@ -17,3 +17,6 @@ MonoBehaviour:
   bodyImage: {fileID: 21300000, guid: 6f019cf1ac32bd2478b221f2eb4e32ee, type: 3}
   coverImage: {fileID: 21300000, guid: 7cb8d7a71b569a447b09445aa0ea8d60, type: 3}
   decoration: {fileID: 21300000, guid: afab2b869267b524aaac552b68b9963f, type: 3}
+  size: 50
+  weight: 50
+  friction: 50

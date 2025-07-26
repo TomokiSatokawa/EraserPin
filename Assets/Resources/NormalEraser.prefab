@@ -130,13 +130,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 873483147679551339}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 3.64, z: 8.79}
+  m_LocalRotation: {x: -0, y: 1, z: -0, w: -0.00000004371139}
+  m_LocalPosition: {x: 0, y: 3.6400008, z: 8.789997}
   m_LocalScale: {x: 10, y: 10, z: 10}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 5827958518149340746}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
 --- !u!1 &1375478147157750748
 GameObject:
   m_ObjectHideFlags: 0
@@ -162,7 +162,7 @@ Transform:
   m_GameObject: {fileID: 1375478147157750748}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -2, y: 0, z: 2.437}
+  m_LocalPosition: {x: -2.08, y: 0, z: 2.3759365}
   m_LocalScale: {x: 10, y: 10, z: 10}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -330,7 +330,7 @@ Transform:
   m_GameObject: {fileID: 3069447427882516183}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.3397441, y: 1.0008, z: 2.5878143}
+  m_LocalPosition: {x: 0, y: 1.0800004, z: 2.3759365}
   m_LocalScale: {x: 10, y: 10, z: 10}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -361,7 +361,7 @@ Transform:
   m_GameObject: {fileID: 3848986377541184891}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 4.76}
+  m_LocalPosition: {x: 0, y: 0, z: 4.7560024}
   m_LocalScale: {x: 10, y: 10, z: 10}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -392,7 +392,7 @@ Transform:
   m_GameObject: {fileID: 5763933038154543431}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 2, y: 0, z: 2.437}
+  m_LocalPosition: {x: 2.08, y: 0, z: 2.3759365}
   m_LocalScale: {x: 10, y: 10, z: 10}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -482,16 +482,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerNumber: 0
-  TopPosition: {fileID: 3069447427882516183}
+  topPosition: {fileID: 3069447427882516183}
   rightPosition: {fileID: 1375478147157750748}
   leftPosition: {fileID: 5763933038154543431}
   backPosition: {fileID: 3848986377541184891}
   colliders:
   - {fileID: 3261698133745370349}
-  - {fileID: 2241990239620422665}
   - {fileID: 4327746305111396565}
+  - {fileID: 2241990239620422665}
   coverObject: {fileID: 7337286746582549358}
   handPosition: {fileID: 873483147679551339}
+  playerPoitionX: 1
 --- !u!114 &8749811252718226531
 MonoBehaviour:
   m_ObjectHideFlags: 0

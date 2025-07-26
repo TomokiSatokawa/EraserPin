@@ -6,9 +6,12 @@ using UnityEngine.UI;
 
 public class StepperControl : MonoBehaviour
 {
-    public int value;
+    
+    private int value;
+    public int Value { get { return value; } }
     public int maxValue;
     public int minValue;
+    public int defaultValue = 0;
     public TextMeshProUGUI text;
     public Button upButton;
     public Button downButton;
@@ -17,7 +20,17 @@ public class StepperControl : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        value = minValue;
+        if (defaultValue >= minValue)
+        {
+            value = defaultValue;
+        }
+        else
+        {
+
+            value = minValue;
+        }
+        value--;
+        upButton.onClick.Invoke();
         ViewText();
     }
 
@@ -95,8 +108,8 @@ public class StepperControl : MonoBehaviour
     {
         text.SetText(value + "êl");
     }
-    public int GetData()
-    {
-        return value;
-    }
+    //public int GetValue()
+    //{
+    //    return value;
+    //}
 }

@@ -7,7 +7,8 @@ public class CharacterStepper : StepperControl
 {
     public CharacterDataList characterDataList;
     public int playerNumber;
-    private List<CharacterData> list;
+    public List<CharacterData> list;
+    public ChoicePanel choicePanel;
     // Start is called before the first frame update
     void Start()
     {
@@ -23,6 +24,7 @@ public class CharacterStepper : StepperControl
         maxValue = list.Count -1;
         minValue = 0;
         ViewText();
+        
     }
 
     // Update is called once per frame
@@ -32,6 +34,8 @@ public class CharacterStepper : StepperControl
     }
     public override void ViewText()
     {
-        text.text = list[value].eraserName;
+        text.text = list[Value].eraserName;
+        choicePanel.SliderMove(list[Value]);
+        choicePanel.ChangeEraser();
     }
 }

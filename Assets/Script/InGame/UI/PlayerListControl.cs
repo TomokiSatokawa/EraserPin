@@ -35,6 +35,7 @@ public class PlayerListControl : MonoBehaviour
             }
             EraserIcon eraserIcon = clonedObjcet.GetComponent<EraserIcon>(); 
             CharacterData characterData = data.eraserData;
+            //Debug.Log(characterData.name);
             eraserIcon.SetData(characterData.bodyImage, characterData.coverImage, characterData.decoration);
             eraserIcon.ChangeColor(colorData.activeColorPackage[i]);
             eraserIcon.SetPlayerNumber(i + 1);

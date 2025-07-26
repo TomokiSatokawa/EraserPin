@@ -52,7 +52,7 @@ public class GameManager : MonoBehaviourPunCallbacks, IPunObservable
                 playerData.deviceNumber = i;
                 playerData.isComputer = false;
                 playerData.computerLevel = 0;
-                playerData.eraserData = GetEraserData(i);
+                playerData.eraserData = GetEraserData(playerNumber);
                 playerList.Add(playerData);
                 playerNumber++;
             }
@@ -63,7 +63,7 @@ public class GameManager : MonoBehaviourPunCallbacks, IPunObservable
                 playerData.deviceNumber = i;
                 playerData.isComputer = true;
                 playerData.computerLevel = 1;
-                playerData.eraserData = GetEraserData(i);
+                playerData.eraserData = GetEraserData(playerNumber);
                 playerList.Add(playerData);
                 playerNumber++;
             }
@@ -95,7 +95,7 @@ public class GameManager : MonoBehaviourPunCallbacks, IPunObservable
         frameControl.ChangeColor(colorData.activeColorPackage[turn -1],turn);
         frameControl.Active(true);
         cameraWork.TopFocus();
-
+        eraserClone.cloneEraserObjects[turn - 1].GetComponent<EraserControlBase>().MyTurn();
     }
     public void NextTurn()
     {

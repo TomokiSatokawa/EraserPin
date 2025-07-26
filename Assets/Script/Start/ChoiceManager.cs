@@ -20,6 +20,7 @@ public class ChoiceManager : MonoBehaviour
         nextButton.interactable = true;
         waitObj.SetActive(false);
         FindAnyObjectByType<PlaySettings>().Ready(deviceNumber, 0);
+        FindAnyObjectByType<StartCameraWork>().TableZoomOut();
     }
 
     // Update is called once per frame
@@ -31,7 +32,7 @@ public class ChoiceManager : MonoBehaviour
             for (int i = 1; i <= PhotonNetwork.CurrentRoom.PlayerCount; i++)
             {
                 int ready = (PhotonNetwork.CurrentRoom.CustomProperties["ready" + "" + i.ToString()] is int a) ? a : 3;
-                Debug.Log(i + "" + ready);
+               
                 if (ready == 0)
                 {
                     b = false;
@@ -61,8 +62,9 @@ public class ChoiceManager : MonoBehaviour
                     if (a <= playerCount + comCount)
                     {
                         ChoicePanel choicePanel = panel.GetComponent<ChoicePanel>();
+                        StepperControl stepperControl = choicePanel.stepper;
 
-                        FindAnyObjectByType<PlaySettings>().Character(choicePanel.GetPlayerNumber(), characterCode + choicePanel.CharacterCode().ToString());
+                        FindAnyObjectByType<PlaySettings>().Character(choicePanel.PlayerNumber, characterCode + stepperControl.Value.ToString());
                         //タイミングを画面移動時にする
                     }
                     else

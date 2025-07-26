@@ -9,4 +9,7 @@ public class CharacterData : ScriptableObject
     public Sprite bodyImage;
     public Sprite coverImage;
     public Sprite decoration;
+    public float size;
+    public float weight;
+    public float friction;
 }

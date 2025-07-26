@@ -38,7 +38,7 @@ public class DeviceUIControl : MonoBehaviourPunCallbacks
         deviceText.SetText(name);
     }
 
-    public void ChangeEraserUI(int playerCount, int comCount)
+    public void ChangeEraserUI(int playerCount, int comCount,int deviceNumber)
     {
         int i = 1;
         foreach (EraserUIControl obj in eraserUIs)

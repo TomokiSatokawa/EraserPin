@@ -13,4 +13,10 @@ MonoBehaviour:
   m_Name: Big
   m_EditorClassIdentifier: 
   eraserName: "\u5927\u304D\u3044\u6D88\u3057\u30B4\u30E0"
-  characterPrefab: {fileID: 0}
+  characterPrefab: {fileID: 4829652568891678980, guid: fb0e6aa706aa80f4f8b9fad1745cccfb, type: 3}
+  bodyImage: {fileID: 21300000, guid: 25e1fc3269a544f49b31c8c435a35f85, type: 3}
+  coverImage: {fileID: 21300000, guid: 7cb8d7a71b569a447b09445aa0ea8d60, type: 3}
+  decoration: {fileID: 21300000, guid: 31d0218ffd9a90b44a45b4088d262aa9, type: 3}
+  size: 80
+  weight: 80
+  friction: 80

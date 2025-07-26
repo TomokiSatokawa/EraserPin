@@ -12,4 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c2bee6e17ae8e9445971e739ed1c43b3, type: 3}
   m_Name: Small
   m_EditorClassIdentifier: 
-  eraserName: "\u5C0F\u3055\u3044"
+  eraserName: "\u5C0F\u3055\u3044\u6D88\u3057\u30B4\u30E0"
+  characterPrefab: {fileID: 7158758007057067789, guid: 01a68429bbfb0f8459a14c2570053525, type: 3}
+  bodyImage: {fileID: 0}
+  coverImage: {fileID: 0}
+  decoration: {fileID: 0}
+  size: 25
+  weight: 25
+  friction: 25

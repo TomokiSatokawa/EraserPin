@@ -14,6 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   normalEraser:
   - {fileID: 11400000, guid: ecef68ff5d25cd74f90155e4183709e4, type: 2}
+  - {fileID: 11400000, guid: a345518d3a3147841929af6ae3613f29, type: 2}
   - {fileID: 11400000, guid: 6bf6f4bcb5da6ac4cb9b350e8fa3b22a, type: 2}
+  - {fileID: 11400000, guid: 68dc5fd09a20118418d020444da4db02, type: 2}
+  - {fileID: 11400000, guid: 1d82d05c3f45b534ea79046a6d73dbb4, type: 2}
   hardEraser:
   - {fileID: 11400000, guid: 66c5c5efda6244646a1a67b3f04f2efc, type: 2}
+  - {fileID: 11400000, guid: 8472c0d9395a0644886d8be59c5f1dac, type: 2}

@@ -49,7 +49,7 @@ public class RoomManager : MonoBehaviourPunCallbacks
     }
     public void CreateRandomRoom(RoomOptions roomOptions,mode roomMode)
     {
-        Debug.Log("Create mode : " + roomOptions);
+        //Debug.Log("Create mode : " + roomOptions);
         gamemode = roomMode;
         PhotonNetwork.CreateRoom(Random.Range(0, 9999).ToString("0000"), roomOptions);
         loadObject.SetActive(true);
@@ -136,20 +136,23 @@ public class RoomManager : MonoBehaviourPunCallbacks
         masterText.SetText(deviceName);
         PlaySettings playSettings = this.gameObject.GetComponent<PlaySettings>();
         playSettings.NameSet(PhotonNetwork.CurrentRoom.PlayerCount, deviceName);
-        
+
+        deviceNumber = PhotonNetwork.CurrentRoom.PlayerCount;
+        deviceViewPhoton.GetComponent<DeviceView>().OutLine(deviceNumber);
+        playSettings.ResetData();
+
+        FindAnyObjectByType<DeviceView>().ChangeListTure();
 
         //ìØä˙èàóù
         FindAnyObjectByType<DeviceView>().View(PhotonNetwork.CurrentRoom.PlayerCount);
         deviceViewPhoton.GetComponent<PhotonView>().RPC("View", RpcTarget.All, PhotonNetwork.CurrentRoom.PlayerCount);
 
         //å¬êl
-        deviceNumber = PhotonNetwork.CurrentRoom.PlayerCount;
-        deviceViewPhoton.GetComponent<DeviceView>().OutLine(deviceNumber);
-        playSettings.ResetData();
+        
         
     }
     public override void OnPlayerEnteredRoom(Player newPlayer)
-    {
+    {//roomÇ…ì¸Ç¡ÇΩéû
         deviceViewPhoton.GetComponent<PhotonView>().RPC("View", RpcTarget.All, PhotonNetwork.CurrentRoom.PlayerCount);
     }
     public string GetName()
