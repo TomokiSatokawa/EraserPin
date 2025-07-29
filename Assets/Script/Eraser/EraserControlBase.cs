@@ -1,8 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
-using Palmmedia.ReportGenerator.Core.Reporting.Builders;
 using Photon.Pun;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class EraserControlBase : MonoBehaviourPunCallbacks
@@ -15,10 +13,13 @@ public class EraserControlBase : MonoBehaviourPunCallbacks
     public List<MeshCollider> colliders = new List<MeshCollider>();
     public GameObject coverObject;
     public GameObject handPosition;
+    private Rigidbody rb;
+    private float maxSpeed = 10f;
     // Start is called before the first frame update
     public void Start()
     {
         DataReset();
+        rb = GetComponent<Rigidbody>();
     }
     public virtual void DataReset() { }
     public int GetPlayerNumber()
@@ -153,5 +154,17 @@ public class EraserControlBase : MonoBehaviourPunCallbacks
             col.gameObject.tag = "EraserMesh";
         }
         this.gameObject.tag = "Eraser";
+    }
+
+    void FixedUpdate()
+    {
+        if(rb == null)
+        {
+            return;
+        }
+        if (rb.velocity.magnitude > maxSpeed)
+        {
+            rb.velocity = rb.velocity.normalized * maxSpeed;
+        }
     }
 }

@@ -12,6 +12,7 @@ public class HardEraserBase : EraserControlBase
     private Vector3 eraserPosition;
     public override void DataReset()
     {
+        SliderActive(false);
         moveAmount = 0;
         eraserPosition = this.transform.position;
         moveAmountSlider.value = 0;
@@ -19,11 +20,14 @@ public class HardEraserBase : EraserControlBase
     }
     public override void StopProcess()
     {
+        SliderActive(true);
         moveAmount += Vector3.Distance(eraserPosition, this.transform.position);
-        moveAmountSlider.DOValue(moveAmount, 1f).OnComplete(ValueCheck);
+        moveAmountSlider.DOValue(moveAmount, 1f).SetDelay(1f).OnComplete(ValueCheck);
+        
     }
     public void ValueCheck()
     {
+        SliderActive(false);
         if (moveAmount > maxAmount)
         {
             photonView.RPC(nameof(EraserEffect), RpcTarget.All, playerNumber);
@@ -39,5 +43,9 @@ public class HardEraserBase : EraserControlBase
             return;
         }
         DataReset();
+    }
+    public void SliderActive(bool b)
+    {
+        moveAmountSlider.gameObject.SetActive(b);
     }
 }

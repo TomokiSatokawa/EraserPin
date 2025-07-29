@@ -8,7 +8,7 @@ public class KillCheck : MonoBehaviourPunCallbacks
     public GameObject killEffect;
     private static Hashtable propHash = new Hashtable();
     public GameManager gameManager;
-    public GameObject winnerEraser;
+    public int winnerEraser = 0;
     // Start is called before the first frame update
     void Start()
     {
@@ -32,14 +32,13 @@ public class KillCheck : MonoBehaviourPunCallbacks
 
             if (PlayerPrefs.GetInt("Dnumber") == 1)
             {
-                if(RemainingPlayer() == 0)
-                {
-                    winnerEraser = other.gameObject;
-                }
+                Debug.Log("A");
+                winnerEraser = hitObject.GetComponent<EraserControlBase>().playerNumber;
                 propHash["ranking" + "" + eraserData.playerNumber] = RemainingPlayer() + 1;
                 PhotonNetwork.CurrentRoom.SetCustomProperties(propHash);
                 propHash.Clear();
             }
+                Debug.Log("B");
         }
 
         
@@ -61,11 +60,11 @@ public class KillCheck : MonoBehaviourPunCallbacks
     {
         if(playerNumber == 0)
         {
-            if(winnerEraser == null)
+            if(winnerEraser == 0)
             {
                 Debug.LogError("WinnerEraser Null");
             }
-            playerNumber = winnerEraser.GetComponent<EraserControlBase>().playerNumber;
+            playerNumber = winnerEraser;
         }
         propHash["ranking" + "" + playerNumber] = 1;
         PhotonNetwork.CurrentRoom.SetCustomProperties(propHash);

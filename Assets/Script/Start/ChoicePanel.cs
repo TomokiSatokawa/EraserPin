@@ -59,7 +59,11 @@ public class ChoicePanel : MonoBehaviour
         eraserObject = Instantiate(eraserPrefab,position,quaternion);
         eraserObject.GetComponent<Rigidbody>().isKinematic = true;
         eraserObject.GetComponent<EraserControlBase>().ChangeColor(colorData.activeColorPackage[playerNumber -1]);
-
+        HardEraserBase hardEraserBase = eraserObject.GetComponent<HardEraserBase>();
+        if (hardEraserBase != null)
+        {
+            hardEraserBase.SliderActive(false);
+        }
     }
     public float GetEraserHight(GameObject eraserObject)
     {

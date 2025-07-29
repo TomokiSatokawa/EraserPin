@@ -408,9 +408,7 @@ MonoBehaviour:
   moveAmount: 0
   maxAmount: 1
   moveAmountSlider: {fileID: 7032400313343750695}
-  alpha: {r: 0, g: 0, b: 0, a: 0.09803922}
-  normal: {fileID: 2100000, guid: acb9af11d1ea9b84588adc7d4971b8e7, type: 2}
-  stealth: {fileID: 2100000, guid: 8a107ea38fa118a4f818de7f7cf20757, type: 2}
+  alpha: {r: 0, g: 0, b: 0, a: 0.29803923}
 --- !u!114 &-4762753082901146670
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -677,6 +675,18 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7531774538241861076, guid: 211a96cfa0682844eb7f50c454f2117a, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7756955095684863357, guid: 211a96cfa0682844eb7f50c454f2117a, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7756955095684863357, guid: 211a96cfa0682844eb7f50c454f2117a, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7756955095684863357, guid: 211a96cfa0682844eb7f50c454f2117a, type: 3}
+      propertyPath: m_AnchorMin.x
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9123280784237323776, guid: 211a96cfa0682844eb7f50c454f2117a, type: 3}

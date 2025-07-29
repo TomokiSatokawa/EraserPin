@@ -18908,6 +18908,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   killEffect: {fileID: 1000013462590818, guid: a8c2849d21ebb8c4ab67732676c814c2, type: 3}
   gameManager: {fileID: 0}
+  winnerEraser: 0
 --- !u!224 &8032712635926369847
 RectTransform:
   m_ObjectHideFlags: 0
