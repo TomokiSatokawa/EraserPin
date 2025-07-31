@@ -21,3 +21,5 @@ MonoBehaviour:
   hardEraser:
   - {fileID: 11400000, guid: 66c5c5efda6244646a1a67b3f04f2efc, type: 2}
   - {fileID: 11400000, guid: 8472c0d9395a0644886d8be59c5f1dac, type: 2}
+  - {fileID: 11400000, guid: 8af9799e41af34246a24fcb69bec1430, type: 2}
+  - {fileID: 11400000, guid: 7b894eecdc49cd94f84e1ba7837fcb86, type: 2}

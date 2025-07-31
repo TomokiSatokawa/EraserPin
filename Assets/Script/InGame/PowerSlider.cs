@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.IO.IsolatedStorage;
 using DG.Tweening;
 using UnityEngine;
 using UnityEngine.UI;
@@ -9,6 +10,8 @@ public class PowerSlider : MonoBehaviour
     public GameObject sliderObject;
     public GameObject stopButton;
     public Slider powerSlider;
+    public GameObject jetToggle;
+    private bool isJet;
     public float speed;
     private bool isMove = false;
     private float powerData;
@@ -23,7 +26,7 @@ public class PowerSlider : MonoBehaviour
     {
         SliderMove();
     }
-    public void Active(bool a,int deviceNumber = 0)
+    public void Active(bool a, int deviceNumber = 0)
     {
         if (deviceNumber != 0 && deviceNumber != PlayerPrefs.GetInt("Dnumber"))
         {
@@ -33,6 +36,7 @@ public class PowerSlider : MonoBehaviour
         stopButton.SetActive(a);
         powerSlider.value = powerSlider.maxValue;
         isMove = false;
+        jetToggle.SetActive(isJet && a);
     }
     public void SliderMove()
     {
@@ -53,8 +57,17 @@ public class PowerSlider : MonoBehaviour
         //Debug.Log(powerSlider.maxValue - Mathf.Abs(powerSlider.value));
         powerData = powerSlider.maxValue - Mathf.Abs(powerSlider.value);
         powerData += 1f;
+        if (isJet)
+        {
+            powerData *= 10;
+            isJet = false;
+        }
         Active(false);
         FindAnyObjectByType<GameManager>().EraserFocus();
+    }
+    public void Jet()
+    {
+        isJet = true;
     }
     public float GetData()
     {

@@ -25,13 +25,16 @@ public class EraserMove : MonoBehaviourPunCallbacks
 
         direction.y = 0;
         direction = direction.normalized;
+
+        direction = PowerRestraint(direction * power);
+
         GameObject targetEraser = FindAnyObjectByType<EraserClone>().cloneEraserObjects[eraserIndex - 1];
         Rigidbody rb = targetEraser.GetComponent<Rigidbody>();
-        Log.text("Foce" + direction * power);
-        rb.AddForce(direction * power/50, ForceMode.Impulse);
+        Log.text("Foce" + direction);
+        rb.AddForce(direction/50, ForceMode.Impulse);
         rb.inertiaTensor = new Vector3(1f, 1f, 1f); // åyÇ≠Ç∑ÇÈï˚å¸Çí≤êÆ
         rb.inertiaTensorRotation = Quaternion.identity;
-        rb.maxAngularVelocity = 50f;
+        rb.maxAngularVelocity = 30f;
         power *= 10;
         if(power / 10 < 0f)
         {
@@ -42,5 +45,35 @@ public class EraserMove : MonoBehaviourPunCallbacks
         Log.text("Rotate" + rotate +""+ power);
         rb.AddTorque(rotate * power, ForceMode.Impulse);
         FindAnyObjectByType<GameManager>().Check();
+    }
+    public Vector3 PowerRestraint(Vector3 d)
+    {
+        if(d.x > 100f)
+        {
+            d.x = 50f;
+        }
+        if(d.x < -100f)
+        {
+            d.x = -50f;
+        }
+        if (d.y > 100f)
+        {
+            d.y = 50f;
+        }
+        if (d.y < -100f)
+        {
+            d.y = -50f;
+        }
+        if (d.z > 100f)
+        {
+            d.z = 50f;
+        }
+        if (d.z < -100f)
+        {
+            d.z = -50f;
+        }
+
+        return d;
+
     }
 }

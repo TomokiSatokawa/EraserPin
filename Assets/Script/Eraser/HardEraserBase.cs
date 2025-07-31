@@ -9,7 +9,12 @@ public class HardEraserBase : EraserControlBase
     public float moveAmount;
     public float maxAmount;
     public Slider moveAmountSlider;
-    private Vector3 eraserPosition;
+    protected Vector3 eraserPosition;
+    public enum Timing
+    {
+        Before, After
+    }
+    public Timing effectTiming = Timing.After;
     public override void DataReset()
     {
         SliderActive(false);
@@ -22,18 +27,30 @@ public class HardEraserBase : EraserControlBase
     {
         SliderActive(true);
         moveAmount += Vector3.Distance(eraserPosition, this.transform.position);
-        moveAmountSlider.DOValue(moveAmount, 1f).SetDelay(1f).OnComplete(ValueCheck);
-        
+        if(moveAmount >= maxAmount)
+        {
+            moveAmount = maxAmount;
+        }
+        moveAmountSlider.DOValue(moveAmount, 1f).SetDelay(1f).OnComplete(() => ValueCheck(Timing.After));
+
     }
-    public void ValueCheck()
+    public override void MyTurn()
+    {
+        ValueCheck(Timing.Before);
+    }
+    public void ValueCheck(Timing t)
     {
         SliderActive(false);
-        if (moveAmount > maxAmount)
+        if (moveAmount >= maxAmount && t == effectTiming)
         {
             photonView.RPC(nameof(EraserEffect), RpcTarget.All, playerNumber);
         }
         eraserPosition = this.transform.position;
-        FindAnyObjectByType<StopCheck>().EffectCheck(playerNumber);
+        if (t == Timing.After)
+        {
+            FindAnyObjectByType<StopCheck>().EffectCheck(playerNumber);
+
+        }
     }
     [PunRPC]
     public virtual void EraserEffect(int number)
