@@ -16,13 +16,14 @@ public class ChoicePanel : MonoBehaviour
     public Slider sizeSlider;
     public Slider weightSlider;
     public Slider frictionSlider;
-    public GameObject eraserObject;
+    public PreviewControl previewControl;
     private float moveSpeed = 0.5f;
     // Start is called before the first frame update
     void Start()
     {
         stepper.playerNumber = localPlayerNumber;
         namePlate.color = colorData.activeColorPackage[playerNumber - 1] + Color.white / 2;
+        previewControl = FindAnyObjectByType<PreviewControl>();
         
     }
     public void Awake()
@@ -47,33 +48,6 @@ public class ChoicePanel : MonoBehaviour
     }
     public void ChangeEraser()
     {
-        //positionåvéZ
-        Vector3 position = eraserObject.transform.position;
-        position.y -= GetEraserHight(eraserObject);
-
-        GameObject eraserPrefab = stepper.list[stepper.Value].characterPrefab;
-        position.y += GetEraserHight(eraserPrefab);
-
-        Quaternion quaternion = eraserObject.transform.rotation;
-        Destroy(eraserObject);
-        eraserObject = Instantiate(eraserPrefab,position,quaternion);
-        eraserObject.GetComponent<Rigidbody>().isKinematic = true;
-        eraserObject.GetComponent<EraserControlBase>().ChangeColor(colorData.activeColorPackage[playerNumber -1]);
-        HardEraserBase hardEraserBase = eraserObject.GetComponent<HardEraserBase>();
-        if (hardEraserBase != null)
-        {
-            hardEraserBase.SliderActive(false);
-        }
-    }
-    public float GetEraserHight(GameObject eraserObject)
-    {
-        EraserControlBase controlBase = eraserObject.GetComponent<EraserControlBase>();
-        Vector3 eraserCenter = controlBase.coverObject.transform.position;
-        eraserCenter = eraserObject.transform.TransformPoint(eraserCenter);
-
-        Vector3 topPosition = controlBase.topPosition.transform.position;
-        topPosition = eraserObject.transform.TransformPoint(topPosition);
-
-        return Vector3.Distance(topPosition,eraserCenter);
+        previewControl.ChangeCharacter(PlayerNumber,stepper.Value);
     }
 }

@@ -32,6 +32,7 @@ public class StartCameraWork : MonoBehaviour
     }
     public void TableZoomOut()
     {
+        mainCamera.transform.DOMove(new Vector3(2.102f, 24.5510006f, -46.3540001f), 1f);
         mainCamera.transform.DORotate(new Vector3(25.8609924f, -51f, -3.79516086e-06f), 1f);
         DOTween.To(() => camera.fieldOfView, num => camera.fieldOfView = num, 75, 1f);
     }

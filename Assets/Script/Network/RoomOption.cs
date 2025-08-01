@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Photon.Realtime;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Rendering.PostProcessing;
 
 public class RoomOption : MonoBehaviour
 {
@@ -13,8 +14,8 @@ public class RoomOption : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-
-    }
+        roomName.ActivateInputField();
+    } 
 
     // Update is called once per frame
     void Update()

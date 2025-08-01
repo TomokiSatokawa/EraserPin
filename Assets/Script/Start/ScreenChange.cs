@@ -14,6 +14,7 @@ public class ScreenChange : MonoBehaviourPunCallbacks
     public GameObject errorObject;
     public GameObject characterChoice;
     public GameObject stageSelect;
+    public GameObject locaPlayerCount;
     private void Awake()
     {
         Active();
@@ -56,6 +57,9 @@ public class ScreenChange : MonoBehaviourPunCallbacks
             case 5:
                 stageSelect.SetActive(true);
                 break;
+            case 6:
+                locaPlayerCount.SetActive(true);
+                break;
             case 10:
                 errorObject.SetActive(false);
                 SceneManager.LoadScene("Start");
@@ -90,5 +94,6 @@ public class ScreenChange : MonoBehaviourPunCallbacks
         playerCount.SetActive(false);
         characterChoice.SetActive(false);
         stageSelect.SetActive(false);
+        locaPlayerCount.SetActive(false);
     }
 }

@@ -1676,7 +1676,8 @@ namespace Photon.Realtime
 
 
         /// <summary>
-        /// Joins a random room that matches the filter. Will callback: OnJoinedRoom or OnJoinRandomFailed.
+        /// Joins a random room that matches the filter. Will callback: 
+        /// or OnJoinRandomFailed.
         /// </summary>
         /// <remarks>
         /// Used for random matchmaking. You can join any room or one with specific properties defined in opJoinRandomRoomParams.

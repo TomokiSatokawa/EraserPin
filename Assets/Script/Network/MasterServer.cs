@@ -16,11 +16,16 @@ public class MasterServer : MonoBehaviourPunCallbacks
     {
         screenChange = FindAnyObjectByType<ScreenChange>();
     }
-    public void OnMasterSever()
+    public void OnMasterSever(bool isOnLine)
     {
-        loadObject.SetActive(true);
-        loadText.SetText("サーバーに接続中・・・");
-        PhotonNetwork.ConnectUsingSettings();
+            Debug.Log(isOnLine);
+        PhotonNetwork.OfflineMode = !isOnLine;
+        if (isOnLine)
+        {
+            loadObject.SetActive(true);
+            loadText.SetText("サーバーに接続中・・・");
+            PhotonNetwork.ConnectUsingSettings();
+        }
     }
     public override void OnJoinedLobby()
     {
@@ -30,11 +35,21 @@ public class MasterServer : MonoBehaviourPunCallbacks
     }
     public override void OnConnectedToMaster()
     {
+        if (PhotonNetwork.OfflineMode)
+        {
+            FindAnyObjectByType<StartCameraWork>().TableZoomOut();
+            FindAnyObjectByType<ScreenChange>().OnClick(6);
+            return;
+        }
         loadText.SetText("ロビーに接続中・・・");
         PhotonNetwork.JoinLobby();
     }
     public override void OnDisconnected(DisconnectCause cause)
     {
+        if(cause == DisconnectCause.DisconnectByClientLogic)
+        {
+            return;
+        }
         messageText.SetText("サーバーに接続できませんでした。");
         errorText.SetText(cause.ToString());
         errorObject.SetActive(true);

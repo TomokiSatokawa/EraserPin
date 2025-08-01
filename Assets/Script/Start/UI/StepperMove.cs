@@ -22,7 +22,7 @@ public class StepperMove : MonoBehaviour
         backgroundObject.transform.DOMove(elements[a].transform.position,0.25f);
         if(inputField != null)
         {
-        inputField.SetActive(value == 0);
+           inputField.SetActive(value == 0);
 
         }
     }

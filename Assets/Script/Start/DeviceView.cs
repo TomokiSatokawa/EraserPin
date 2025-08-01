@@ -9,7 +9,6 @@ using TMPro;
 public class DeviceView : MonoBehaviourPunCallbacks
 {
     public List<GameObject> deviceUIObject;
-    public List<GameObject> erasers;
     public StepperControl playerCount;
     public StepperControl comCount;
     public GameObject netWorkObj;
@@ -96,11 +95,6 @@ public class DeviceView : MonoBehaviourPunCallbacks
 
         int playerTotal = playerCount.Value + comCount.Value;
         int i = 1;
-        foreach (GameObject obj in erasers)
-        {
-            obj.SetActive(i <= playerTotal);
-            i++;
-        }
     }
     public void ChangeListTure()
     {

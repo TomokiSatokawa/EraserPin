@@ -260,6 +260,7 @@ MonoBehaviour:
   - {fileID: 3855919213404091295}
   coverObject: {fileID: 7003017299488932523}
   handPosition: {fileID: 7016531923129866050}
+  playerPoitionX: 1
 --- !u!114 &-5066979701991767676
 MonoBehaviour:
   m_ObjectHideFlags: 0

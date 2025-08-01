@@ -20,7 +20,7 @@ public class RoomManager : MonoBehaviourPunCallbacks
     private string deviceName;
     private List<RoomInfo> roomList;
     private List<GameObject> clonedList = new List<GameObject>();
-    private mode gamemode;
+    public mode gamemode;
     public enum mode
     {
         Normal,Hard
@@ -105,13 +105,15 @@ public class RoomManager : MonoBehaviourPunCallbacks
     }
     public override void OnCreatedRoom()
     {
-        
         FindAnyObjectByType<PlaySettings>().SetMode(gamemode);
     }
     public override void OnJoinedRoom()
     {
-
-
+        Debug.Log(PhotonNetwork.CurrentRoom.Name);
+        if (PhotonNetwork.OfflineMode)
+        {
+            return;
+        }
         //âÊñ à⁄ìÆèàóù
         screenChange.OnClick(3);
         loadObject.SetActive(false);

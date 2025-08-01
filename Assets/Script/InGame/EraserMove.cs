@@ -31,7 +31,8 @@ public class EraserMove : MonoBehaviourPunCallbacks
         GameObject targetEraser = FindAnyObjectByType<EraserClone>().cloneEraserObjects[eraserIndex - 1];
         Rigidbody rb = targetEraser.GetComponent<Rigidbody>();
         Log.text("Foce" + direction);
-        rb.AddForce(direction/50, ForceMode.Impulse);
+        Vector3 moveForce = direction.normalized * (power / 50f);
+        rb.AddForce(moveForce, ForceMode.Impulse);
         rb.inertiaTensor = new Vector3(1f, 1f, 1f); // åyÇ≠Ç∑ÇÈï˚å¸Çí≤êÆ
         rb.inertiaTensorRotation = Quaternion.identity;
         rb.maxAngularVelocity = 30f;

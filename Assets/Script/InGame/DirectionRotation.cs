@@ -54,6 +54,9 @@ public class DirectionRotation : MonoBehaviour
         outputDirection = outputDirection.normalized;
 
         outputRotation = RotationDirection(hit) * rotatePower;
+
+        Debug.DrawRay(hit.point, outputDirection * 2, Color.green, 2f);
+        //Debug.LogError("Stop");
     }
     //AI
     public Vector3 GetCenter(RaycastHit hit)
