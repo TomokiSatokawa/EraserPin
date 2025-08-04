@@ -521,6 +521,7 @@ MonoBehaviour:
   cameraPhotonView: {fileID: 827458305}
   colorData: {fileID: 11400000, guid: 4359365c6c5bd984ba802298ff406904, type: 2}
   characterDataList: {fileID: 11400000, guid: abe180b847099a74e9d2956e77766e27, type: 2}
+  comMove: {fileID: 0}
   playerList:
   - deviceNumber: 0
     isComputer: 0
@@ -3696,6 +3697,7 @@ GameObject:
   - component: {fileID: 1348626120}
   - component: {fileID: 1348626123}
   - component: {fileID: 1348626124}
+  - component: {fileID: 1348626125}
   m_Layer: 0
   m_Name: EraserMove
   m_TagString: Untagged
@@ -3788,6 +3790,20 @@ MonoBehaviour:
   inputDirection: {x: 0, y: 0, z: 0}
   distance: 0
   hitSide: 0
+--- !u!114 &1348626125
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1348626119}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 45b5b98952f9acc40878ddc8ee6297fa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  powerSlider: {fileID: 2031716323}
+  pointerControl: {fileID: 6427316381461569762}
 --- !u!1 &1352570466
 GameObject:
   m_ObjectHideFlags: 0

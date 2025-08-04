@@ -19,6 +19,7 @@ public class GameManager : MonoBehaviourPunCallbacks, IPunObservable
     public GameObject cameraPhotonView;
     public ColorData colorData;
     public CharacterDataList characterDataList;
+    public ComMove comMove;
     [System.Serializable]public class PlayerData
     {
         public int deviceNumber;
@@ -37,6 +38,7 @@ public class GameManager : MonoBehaviourPunCallbacks, IPunObservable
         deviceNumber = PlayerPrefs.GetInt("Dnumber");
         isOperation = deviceNumber == 1;
         FindAnyObjectByType<PlayerListControl>().Clone(playerList);
+        comMove = FindAnyObjectByType<ComMove>();
 
     }
     public void GetPlayerData()
@@ -94,6 +96,7 @@ public class GameManager : MonoBehaviourPunCallbacks, IPunObservable
         }
         frameControl.ChangeColor(colorData.activeColorPackage[turn -1],turn);
         frameControl.Active(true);
+        comMove.Input(eraserClone.cloneEraserObjects[turn - 1]);
         cameraWork.TopFocus();
         eraserClone.cloneEraserObjects[turn - 1].GetComponent<EraserControlBase>().MyTurn();
     }

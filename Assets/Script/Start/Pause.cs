@@ -32,6 +32,6 @@ public class Pause : MonoBehaviour
     {
         pausePanel.SetActive(false);
         PhotonNetwork.Disconnect();
-        SceneManager.LoadScene("Start");
+        SceneManager.LoadScene("Start");    
     }
 }

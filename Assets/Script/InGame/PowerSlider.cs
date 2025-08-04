@@ -73,4 +73,8 @@ public class PowerSlider : MonoBehaviour
     {
         return powerData;
     }
+    public void ComInput(float p)
+    {
+        powerData = p;
+    }
 }

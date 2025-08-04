@@ -109,7 +109,7 @@ public class EraserClone : MonoBehaviourPunCallbacks
                 clonePrefab = characterDataList.hardEraser[Index].characterPrefab;
             }
             GameObject newEraser = PhotonNetwork.Instantiate(clonePrefab.name, position.transform.position, position.transform.rotation);
-            //newEraser.name += i.ToString();
+            newEraser.name += i + 1.ToString();
             newEraser.GetComponent<EraserControlBase>().ChangeColor(colorData.activeColorPackage[i]);
             EraserControlBase controlBase = newEraser.GetComponent<EraserControlBase>();
             controlBase.playerNumber = i + 1;
