@@ -8,6 +8,7 @@ public class ChoicePanel : MonoBehaviour
 {
     public CharacterStepper stepper;
     public TextMeshProUGUI nameText;
+    public GameObject comRavel;
     public ColorData colorData;
     public Image namePlate;
     public int localPlayerNumber;
@@ -35,10 +36,11 @@ public class ChoicePanel : MonoBehaviour
     {
         
     }
-    public void SetName(int number)
+    public void SetName(int number,bool isCom)
     {
         nameText.SetText(number.ToString() + "P");
         playerNumber = number;
+        comRavel.SetActive(isCom);
     }
     public void SliderMove(CharacterData data)
     {

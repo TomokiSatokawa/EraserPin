@@ -18,7 +18,9 @@ public class StepperMove : MonoBehaviour
 
     public void OnClick(int a)
     {
-        value = a;
+        value = a;  
+        //backgroundObject.transform.parent = elements[a].transform;
+        //backgroundObject.transform.localScale = Vector3.one;
         backgroundObject.transform.DOMove(elements[a].transform.position,0.25f);
         if(inputField != null)
         {

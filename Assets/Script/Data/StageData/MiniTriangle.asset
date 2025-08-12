@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   stageName: test
   sceneName: MiniTriangle
-  stageImage: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
+  stageImage: {fileID: 0}
   miniPlayerCount: 2
   maxPlayerCount: 5
   isGimmick: 0

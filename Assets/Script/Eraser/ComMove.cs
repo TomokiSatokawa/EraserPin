@@ -25,12 +25,14 @@ public class ComMove : MonoBehaviour
         int i = 0;
         foreach(GameObject obj in eraserClone.cloneEraserObjects)
         {
+            if(obj == null) continue;
             if(i == 0)
             {
                 near = obj;
+                i++;
                 continue;
             }
-            if (obj == near)
+            if (obj.name == comEraser.name)
             {
                 continue;
             }
@@ -41,21 +43,29 @@ public class ComMove : MonoBehaviour
                 near = obj;
             }
         }
-        Debug.Log(near.name);
-        Vector3 direction = near.transform.position - comEraser.transform.position; 
-        EraserControlBase eraserControl = comEraser.GetComponent<EraserControlBase>();
-        Vector3 startPosition = -direction * Vector3.Distance(comEraser.transform.position, eraserControl.backPosition.transform.position) * 2;
-        Vector3 goalPosition = near.transform.position;
-        RaycastHit? hit = Ray(startPosition, goalPosition,comEraser);
+        Debug.Log(near.gameObject.name);
         
+
+        Vector3 direction = near.transform.position - comEraser.transform.position;
+        EraserControlBase eraserControl = comEraser.GetComponent<EraserControlBase>();
+        Vector3 startPosition = comEraser.transform.position;
+        startPosition += -direction * Vector3.Distance(comEraser.transform.position, eraserControl.backPosition.transform.position) * 10;
+        Debug.DrawRay(startPosition,direction,Color.magenta,5f);
+        Vector3 goalPosition = near.transform.position;
+        RaycastHit hit = Ray(startPosition, direction * 100,comEraser);
+        pointerControl.ComData(hit, direction);
+        powerSlider.ComPowerData(Random.Range(0, powerSlider.powerSlider.maxValue));
     }
-    public RaycastHit? Ray(Vector3 s, Vector3 g,GameObject t)
+    public RaycastHit Ray(Vector3 s, Vector3 g,GameObject t)
     {
         Ray ray = new Ray(s, g);
         Vector3 hitPosition = Vector3.zero;
-        RaycastHit? hitEraser = null;
+        RaycastHit hitEraser; 
+        Physics.Raycast(ray,out hitEraser);
+        Debug.DrawRay(s,g, Color.cyan,5f);
         foreach(RaycastHit hit in Physics.RaycastAll(ray))
         {
+            Debug.Log(hit.collider.gameObject);
             if (!hit.collider.gameObject.CompareTag("EraserMesh"))
             {
                 continue;
@@ -68,7 +78,7 @@ public class ComMove : MonoBehaviour
             int hitPlayerNumber = hitObject.GetComponent<EraserControlBase>().playerNumber;
             if (hitPlayerNumber == t.GetComponent<EraserControlBase>().playerNumber)
             {
-                if (hitPosition == Vector3.zero || Vector3.Distance(s, hit.point) < Vector3.Distance(pointerObject.transform.position, hitPosition))
+                if (hitPosition == Vector3.zero || Vector3.Distance(s, hit.point) < Vector3.Distance(s, hitPosition))
                 {
                     //Debug.Log("D");
                     hitPosition = hit.point;

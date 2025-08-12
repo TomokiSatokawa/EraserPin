@@ -106,7 +106,7 @@ public class ChoiceManager : MonoBehaviour
             if (a <= playerCount + comCount)
             {
                 panel.SetActive(true);
-                panel.GetComponent<ChoicePanel>().SetName(otherPlayerCount + a);
+                panel.GetComponent<ChoicePanel>().SetName(otherPlayerCount + a, playerCount < a);
 
             }
             else

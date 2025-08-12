@@ -55,12 +55,12 @@ public class ScrollbarControl : MonoBehaviourPunCallbacks
             newObject.GetComponent<RankingPanelControl>().SetData(a + 1, ranking[a]);
             a++;
         }
-        GameObject newObject_ = Instantiate(clonePrefab, content.transform);
-        newObject_.GetComponent<RankingPanelControl>().Hidden();
-        newObject_ = Instantiate(clonePrefab, content.transform);
-        newObject_.GetComponent<RankingPanelControl>().Hidden(); 
-        newObject_ = Instantiate(clonePrefab, content.transform);
-        newObject_.GetComponent<RankingPanelControl>().Hidden();
+        //GameObject newObject_ = Instantiate(clonePrefab, content.transform);
+        //newObject_.GetComponent<RankingPanelControl>().Hidden();
+        //newObject_ = Instantiate(clonePrefab, content.transform);
+        //newObject_.GetComponent<RankingPanelControl>().Hidden(); 
+        //newObject_ = Instantiate(clonePrefab, content.transform);
+        //newObject_.GetComponent<RankingPanelControl>().Hidden();
     }
     public void Back()
     {

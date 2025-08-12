@@ -13,7 +13,7 @@ public class PowerSlider : MonoBehaviour
     public GameObject jetToggle;
     private bool isJet;
     public float speed;
-    private bool isMove = false;
+    private bool isUp;
     private float powerData;
     // Start is called before the first frame update
     void Start()
@@ -35,20 +35,29 @@ public class PowerSlider : MonoBehaviour
         sliderObject.SetActive(a);
         stopButton.SetActive(a);
         powerSlider.value = powerSlider.maxValue;
-        isMove = false;
         jetToggle.SetActive(isJet && a);
     }
     public void SliderMove()
     {
-        if (isMove)
+        
+        if (powerSlider.value >= powerSlider.maxValue)
         {
-            return;
+            isUp = false;
         }
-        isMove = true;
+        else if(powerSlider.value <= powerSlider.minValue)
+        {
+            isUp  = true;
+        }
 
-        powerSlider.DOValue(powerSlider.maxValue, speed)
-            .OnComplete(() => powerSlider.DOValue(powerSlider.minValue, speed)
-            .OnComplete(() => isMove = false));
+        if (isUp)
+        {
+            powerSlider.value += speed *  Time.deltaTime;
+        }
+        else
+        {
+            powerSlider.value -= speed * Time.deltaTime;
+        }
+
     }
     public void Stop()
     {
@@ -68,6 +77,11 @@ public class PowerSlider : MonoBehaviour
     public void Jet()
     {
         isJet = true;
+    }
+    public void ComPowerData(float value)
+    {
+        Debug.Log(value);
+        powerSlider.value = value;
     }
     public float GetData()
     {

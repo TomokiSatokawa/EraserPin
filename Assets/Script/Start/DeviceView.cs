@@ -23,7 +23,8 @@ public class DeviceView : MonoBehaviourPunCallbacks
     public TextMeshProUGUI roomPass;
     public TextMeshProUGUI roomTitle;
     public TextMeshProUGUI gameMode;
-    public WarningMessage warningMessage;
+    public GameObject manyPlayers;
+    public GameObject fewPlayers;
     public void Awake()
     {
         foreach (GameObject obj in deviceUIObject)
@@ -34,7 +35,7 @@ public class DeviceView : MonoBehaviourPunCallbacks
     public void Start()
     {
         nextButton.interactable = true;
-        nextWindowButton.SetActive(false) ;
+        nextWindowButton.SetActive(false);
         CountChange();
         SetRoomOption();
     }
@@ -48,24 +49,34 @@ public class DeviceView : MonoBehaviourPunCallbacks
             isInRoom = true;
         }
         SetDeviceNumber();
+        int playerGameAll = 0;
+        for (int i = 1; i <= PhotonNetwork.CurrentRoom.PlayerCount; i++)
+        {
+            playerGameAll += (PhotonNetwork.CurrentRoom.CustomProperties["playerCount" + "" + i.ToString()] is int p) ? p : 0;
+            playerGameAll += (PhotonNetwork.CurrentRoom.CustomProperties["comCount" + "" + i.ToString()] is int c) ? c : 0;
+        }
         if (!ready)
         {
-        nextButton.interactable = (playerCount.Value + comCount.Value) <= 4;
+            int playerTotal = playerCount.Value + comCount.Value;
+           
+            bool isActive = playerTotal <= 4 && playerGameAll > 1;
+            nextButton.interactable = isActive;
 
         }
         bool b = true;
         for (int i = 1; i <= PhotonNetwork.CurrentRoom.PlayerCount; i++)
         {
             int ready = (PhotonNetwork.CurrentRoom.CustomProperties["ready" + "" + i.ToString()] is int a) ? a : 3;
-            if(ready == 0)
+            if (ready == 0)
             {
                 b = false;
                 break;
             }
         }
         nextWindowButton.GetComponent<Button>().interactable = b;
-        warningMessage.enabled = playerCount.Value + comCount.Value <= 1;
-        nextButton.interactable = playerCount.Value + comCount.Value > 1;
+        fewPlayers.SetActive(playerGameAll <= 1);
+        manyPlayers.SetActive(playerCount.Value + comCount.Value > 4);
+       
     }
 
     [PunRPC]
@@ -95,17 +106,18 @@ public class DeviceView : MonoBehaviourPunCallbacks
 
         int playerTotal = playerCount.Value + comCount.Value;
         int i = 1;
+        FindAnyObjectByType<PreviewControl>().Active(playerTotal);
     }
     public void ChangeListTure()
     {
         SetDeviceNumber();
-        int dNumber = _deviceNumber -1;
+        int dNumber = _deviceNumber - 1;
         Debug.Log(dNumber);
         GameObject gameObject = deviceUIObject[dNumber];
         deviceUIObject[dNumber] = deviceUIObject[0];
         deviceUIObject[0] = gameObject;
         int i = 1;
-        foreach(GameObject obj in deviceUIObject)
+        foreach (GameObject obj in deviceUIObject)
         {
             obj.GetComponent<DeviceUIControl>().deviceNumber = i;
             i++;
@@ -113,23 +125,23 @@ public class DeviceView : MonoBehaviourPunCallbacks
     }
     [PunRPC]
     public void ChangeUI(int deviceNumber, int playerCount, int comCount)
-    { 
-        deviceUIObject[deviceNumber - 1].GetComponent<DeviceUIControl>().ChangeEraserUI(playerCount, comCount,deviceNumber);
+    {
+        deviceUIObject[deviceNumber - 1].GetComponent<DeviceUIControl>().ChangeEraserUI(playerCount, comCount, deviceNumber);
     }
     public void InRoomChenge()
     {
         SetDeviceNumber();
 
-        
+
         for (int i = 1; i < _deviceNumber; i++)
-        { 
+        {
             //€”õ
             int active = (PhotonNetwork.CurrentRoom.CustomProperties["ready" + "" + i.ToString()] is int a) ? a : 3;
             if (active == 1)
             {
-               RavelView(i);
+                RavelView(i);
             }
-            else if(active == 3) 
+            else if (active == 3)
             {
                 Debug.Log("A");
             }
@@ -159,8 +171,8 @@ public class DeviceView : MonoBehaviourPunCallbacks
         comCount.Active(false);
         ready = true;
         nextButton.interactable = false;
-        photonView.RPC(nameof(RavelView), RpcTarget.All,_deviceNumber);
-        playSettings.Ready(_deviceNumber,1);
+        photonView.RPC(nameof(RavelView), RpcTarget.All, _deviceNumber);
+        playSettings.Ready(_deviceNumber, 1);
         if (_deviceNumber == 1)
         {
             nextWindowButton.SetActive(true);
@@ -171,7 +183,7 @@ public class DeviceView : MonoBehaviourPunCallbacks
     [PunRPC]
     public void RavelView(int playerNumber)
     {
-        deviceUIObject[playerNumber -1].GetComponent<DeviceUIControl>().RavelActive();
+        deviceUIObject[playerNumber - 1].GetComponent<DeviceUIControl>().RavelActive();
     }
     public void CharacterChoiceMove()
     {
@@ -194,4 +206,3 @@ public class DeviceView : MonoBehaviourPunCallbacks
         gameMode.text = PlayerPrefs.GetString("mode");
     }
 }
-

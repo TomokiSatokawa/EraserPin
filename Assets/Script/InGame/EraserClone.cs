@@ -61,8 +61,10 @@ public class EraserClone : MonoBehaviourPunCallbacks
         }
         Debug.Log("ColorChange");
         int i = 0;
-        foreach (GameObject eraser in GameObject.FindGameObjectsWithTag("Eraser")) 
+        foreach (GameObject eraser in GameObject.FindGameObjectsWithTag("Eraser"))
         {//名前の最後をループカウンターに
+            Log.text("tag");
+            //playerNumber = i+1;
             eraser.GetComponent<EraserControlBase>().ChangeColor(colorData.activeColorPackage[i]);
             cloneEraserObjects.Add(eraser);
             i++;
@@ -110,8 +112,9 @@ public class EraserClone : MonoBehaviourPunCallbacks
             }
             GameObject newEraser = PhotonNetwork.Instantiate(clonePrefab.name, position.transform.position, position.transform.rotation);
             newEraser.name += i + 1.ToString();
-            newEraser.GetComponent<EraserControlBase>().ChangeColor(colorData.activeColorPackage[i]);
             EraserControlBase controlBase = newEraser.GetComponent<EraserControlBase>();
+            controlBase.ChangeColor(colorData.activeColorPackage[i]);
+            controlBase.COMRavel(FindAnyObjectByType<GameManager>().playerList[i].isComputer);
             controlBase.playerNumber = i + 1;
             cloneEraserObjects.Add(newEraser);
             newEraser.GetComponent<Rigidbody>().sleepThreshold = 1f;

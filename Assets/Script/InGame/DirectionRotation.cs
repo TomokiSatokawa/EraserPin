@@ -4,7 +4,7 @@ public class DirectionRotation : MonoBehaviour
 {
     public Vector3 outputDirection;
     public Vector3 outputRotation;
-    public Vector3 inputDirection;
+    public Vector3 inputNormal;
     public float distance;
     public enum HitSide
     {
@@ -24,36 +24,39 @@ public class DirectionRotation : MonoBehaviour
     }
     public void DataSet(RaycastHit hit,Vector3 rayDirection,float power)
     {
-        power /= 20;
-        inputDirection = hit.normal; //pointerObject.transform.forward;
-        inputDirection = inputDirection.normalized;
-        inputDirection *= -1;
-
+        inputNormal = hit.normal; //pointerObject.transform.forward;
+        inputNormal = inputNormal.normalized;
+        inputNormal *= -1;
+        
          rotatePower = 0f;
         if (hit.collider.gameObject.name == "‰~’Œ")
         {
             rotatePower = hit.collider.transform.InverseTransformPoint(hit.point).x;
             rotatePower = Mathf.Abs(rotatePower);
-            rotatePower *= 10;
             hitSide = HitSide.front;
+            rotatePower = 0;
         }
         else
         {
             rotatePower = Vector3.Distance(GetCenter(hit), hit.point);
-            rotatePower *= 10;
         }
+            rotatePower *= 10;
+
 
         rotatePower = float.Parse(rotatePower.ToString("N2"));
         rotatePower = Normalize(rotatePower);
-        rotatePower -= power;
+        rotatePower *= power;
         if(rotatePower / 20 < 0f)
         {
             rotatePower = 0f;
         }
-        outputDirection = inputDirection.normalized + rayDirection.normalized * (rotatePower/10);
+
+
+        Debug.Log(rotatePower);
+        outputDirection = inputNormal.normalized + rayDirection.normalized * (rotatePower/10);
         outputDirection = outputDirection.normalized;
 
-        outputRotation = RotationDirection(hit) * rotatePower;
+        outputRotation = -RotationDirection(hit) * rotatePower;
 
         Debug.DrawRay(hit.point, outputDirection * 2, Color.green, 2f);
         //Debug.LogError("Stop");
@@ -61,7 +64,7 @@ public class DirectionRotation : MonoBehaviour
     //AI
     public Vector3 GetCenter(RaycastHit hit)
     {
-        Vector3 localDirection = hit.collider.gameObject.transform.InverseTransformDirection(inputDirection);
+        Vector3 localDirection = hit.collider.gameObject.transform.InverseTransformDirection(inputNormal);
         EraserControlBase eraserControl = hit.collider.transform.parent.gameObject.GetComponent<EraserControlBase>();
         if (localDirection == new Vector3(0, 1, 0))
         {
@@ -94,7 +97,7 @@ public class DirectionRotation : MonoBehaviour
                 {
                     value = 0;
                 }
-                value *= 10f;
+                //value *= 10f;
                 break;
 
             case HitSide.front:
@@ -146,7 +149,9 @@ public class DirectionRotation : MonoBehaviour
     }
     public float Power(float power)
     {
-        return power - rotatePower * 1.5f;
+        //      power =  power - rotatePower * 1.5f;
+            power *= 5;
+        return power;   
     }
 }
 

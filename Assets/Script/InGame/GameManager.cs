@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
+using DG.Tweening;
 using Photon.Pun;
+using Photon.Realtime;
 using UnityEngine;
 public class GameManager : MonoBehaviourPunCallbacks, IPunObservable
 {
@@ -19,7 +21,8 @@ public class GameManager : MonoBehaviourPunCallbacks, IPunObservable
     public GameObject cameraPhotonView;
     public ColorData colorData;
     public CharacterDataList characterDataList;
-    public ComMove comMove;
+    public GameObject frameUI;
+    public GameObject playerListUI;
     [System.Serializable]public class PlayerData
     {
         public int deviceNumber;
@@ -30,7 +33,12 @@ public class GameManager : MonoBehaviourPunCallbacks, IPunObservable
     }
     [SerializeField] public List<PlayerData> playerList = new List<PlayerData>();
     private static Hashtable propHash = new Hashtable();
+    private ComMove comMove;
     // Start is called before the first frame update
+    public void Awake()
+    {
+        
+    }
     void Start()
     {
         GetPlayerData();
@@ -39,7 +47,8 @@ public class GameManager : MonoBehaviourPunCallbacks, IPunObservable
         isOperation = deviceNumber == 1;
         FindAnyObjectByType<PlayerListControl>().Clone(playerList);
         comMove = FindAnyObjectByType<ComMove>();
-
+        frameUI.SetActive(true);
+        playerListUI.SetActive(true);
     }
     public void GetPlayerData()
     {
@@ -96,9 +105,8 @@ public class GameManager : MonoBehaviourPunCallbacks, IPunObservable
         }
         frameControl.ChangeColor(colorData.activeColorPackage[turn -1],turn);
         frameControl.Active(true);
-        comMove.Input(eraserClone.cloneEraserObjects[turn - 1]);
-        cameraWork.TopFocus();
         eraserClone.cloneEraserObjects[turn - 1].GetComponent<EraserControlBase>().MyTurn();
+        cameraWork.TopFocus();
     }
     public void NextTurn()
     {
@@ -122,6 +130,7 @@ public class GameManager : MonoBehaviourPunCallbacks, IPunObservable
             Debug.Log("Clear");
             killCheck.Winner(winner);
             cameraPhotonView.GetComponent<PhotonView>().RPC("Result", RpcTarget.All);
+            photonView.RPC(nameof(ResultUI), RpcTarget.All);
             return;
         }
         if (turn > playerList.Count)
@@ -142,6 +151,13 @@ public class GameManager : MonoBehaviourPunCallbacks, IPunObservable
     }
     public void Pointor()
     {
+        powerSlider.Active(false);
+        if (playerList[turn-1].isComputer)
+        {
+            comMove.Input(eraserClone.cloneEraserObjects[turn - 1]);
+            DOVirtual.DelayedCall(1f,EraserFocus);
+            return;
+        }
         GameObject targetEraser = eraserClone.cloneEraserObjects[turn - 1];
         int deviceNumber = playerList[turn - 1].deviceNumber;
         pointerControl.Active(true, targetEraser,deviceNumber);
@@ -158,6 +174,7 @@ public class GameManager : MonoBehaviourPunCallbacks, IPunObservable
     public void Move()
     {
         float power = powerSlider.GetData();
+        //Log.text("p"+power);
         Vector3 direction = pointerControl.GetData(power);
         Vector3 hitPosition = pointerControl.GetHitPosition();
         Vector3 rotate = pointerControl.GetRotate(power);
@@ -192,6 +209,28 @@ public class GameManager : MonoBehaviourPunCallbacks, IPunObservable
     public void Ranking()
     {
         scrollbarControl.View(playerList);
+    }
+    [PunRPC]
+    public void ResultUI()
+    {
+        frameUI.SetActive(false);
+        playerListUI.SetActive(false);
+    }
+    public override void OnPlayerLeftRoom(Player otherPlayer)
+    {
+        int i = 1;
+        foreach(PlayerData data in playerList)
+        {
+            if(data.deviceNumber == otherPlayer.ActorNumber)
+            {
+                data.isComputer = true;
+            }
+            if(turn == i)
+            {
+                Pointor();
+            }
+                i++;
+        }
     }
 }
 

@@ -32,13 +32,13 @@ public class KillCheck : MonoBehaviourPunCallbacks
 
             if (PlayerPrefs.GetInt("Dnumber") == 1)
             {
-                Debug.Log("A");
+                //Debug.Log("A");.
                 winnerEraser = hitObject.GetComponent<EraserControlBase>().playerNumber;
                 propHash["ranking" + "" + eraserData.playerNumber] = RemainingPlayer() + 1;
                 PhotonNetwork.CurrentRoom.SetCustomProperties(propHash);
                 propHash.Clear();
             }
-                Debug.Log("B");
+                //Debug.Log("B");
         }
 
         

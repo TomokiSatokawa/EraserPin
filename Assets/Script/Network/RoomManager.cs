@@ -70,31 +70,32 @@ public class RoomManager : MonoBehaviourPunCallbacks
             clonedList.Add(newPanel.gameObject);
         }
     }
-    public void CreateOpenRoom(RoomOptions roomOptions, mode roomMode,string name)
+    public bool CreateOpenRoom(RoomOptions roomOptions, mode roomMode,string name)
     {
         if (name.Length > 10)
         {
             errorText.SetActive(true);
             errorText.GetComponent<TextMeshProUGUI>().SetText("10文字以下にしてください。");
-            return;
+            return true;
         }
         if(name == "")
         {
             errorText.SetActive(true);
             errorText.GetComponent<TextMeshProUGUI>().SetText("公開ルールの場合、名前の入力が必須です。");
-            return;
+            return true;
         }
         if(FindRoom(name))
         {
             errorText.SetActive(true);
             errorText.GetComponent<TextMeshProUGUI>().SetText("その名前のルームはあります。");
-            return;
+            return true;
         }
         gamemode = roomMode;
         errorText.SetActive(false);
         PhotonNetwork.CreateRoom(name, roomOptions);
         loadObject.SetActive(true);
         loadText.SetText("ルーム作成中・・・");
+        return false;
     }
     public void InRoom(InputPass roomPass)
     {

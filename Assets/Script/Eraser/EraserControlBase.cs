@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using Photon.Pun;
+using TMPro;
 using UnityEngine;
 
 public class EraserControlBase : MonoBehaviourPunCallbacks
@@ -13,13 +14,23 @@ public class EraserControlBase : MonoBehaviourPunCallbacks
     public List<MeshCollider> colliders = new List<MeshCollider>();
     public GameObject coverObject;
     public GameObject handPosition;
+    public GameObject canvasObject;
     private Rigidbody rb;
     private float maxSpeed = 10f;
+    private bool isCOM;
     // Start is called before the first frame update
     public void Start()
     {
         DataReset();
         rb = GetComponent<Rigidbody>();
+    }
+    public void Update()
+    {
+
+        if (Input.GetKeyDown(KeyCode.G))
+        {
+            Log.text(playerNumber);
+        }
     }
     public virtual void DataReset() { }
     public int GetPlayerNumber()
@@ -33,22 +44,27 @@ public class EraserControlBase : MonoBehaviourPunCallbacks
     public virtual void StopProcess() { }
     public void ChangeColor(Color color)
     {
-        coverObject.GetComponent<MeshRenderer>().material.color = color;
+        coverObject.GetComponent<MeshRenderer>().materials[0].color = color;
+    }
+    public void COMRavel(bool b)
+    {
+        isCOM = b;
+        canvasObject.SetActive(b);
     }
     public virtual void MyTurn() { }
     public void PositionAdjustment()
     {
-        //NullCheck
-        if(colliders == null || colliders.Count == 0)
-        {
-            var children = new GameObject[transform.childCount];
+        var children = new GameObject[transform.childCount];
 
-            // 0Å`å¬êî-1Ç‹Ç≈ÇÃéqÇèáî‘Ç…îzóÒÇ…äiî[
-            for (var i = 0; i < children.Length; ++i)
-            {
-                // TransformÇ©ÇÁÉQÅ[ÉÄÉIÉuÉWÉFÉNÉgÇéÊìæÇµÇƒäiî[
-                children[i] = transform.GetChild(i).gameObject;
-            }
+        // 0Å`å¬êî-1Ç‹Ç≈ÇÃéqÇèáî‘Ç…îzóÒÇ…äiî[
+        for (var i = 0; i < children.Length; ++i)
+        {
+            // TransformÇ©ÇÁÉQÅ[ÉÄÉIÉuÉWÉFÉNÉgÇéÊìæÇµÇƒäiî[
+            children[i] = transform.GetChild(i).gameObject;
+        }
+        //NullCheck
+        if (colliders == null || colliders.Count == 0)
+        {
             colliders = new List<MeshCollider> ();
             foreach(GameObject obj in children)
             {
@@ -154,6 +170,28 @@ public class EraserControlBase : MonoBehaviourPunCallbacks
             col.gameObject.tag = "EraserMesh";
         }
         this.gameObject.tag = "Eraser";
+
+        GameObject upText = null;
+        GameObject downText = null;
+        
+        foreach (GameObject child in children)
+        {
+            if (child.GetComponent<Canvas>() != null && child.name == "COM") // é©ï™é©êgÇÕèúäO
+            {
+                canvasObject = child;
+                upText = child.transform.GetChild(0).gameObject;
+                downText = child.transform.GetChild(1).gameObject;
+            }
+        }
+        canvasObject.transform.localPosition = Vector3.zero;
+       Vector3 topPos = topPosition.transform.position;
+        topPos.y += 0.001f;
+        upText.transform.position = topPos;
+        Vector3 localTopPos = upText.transform.localPosition;
+        localTopPos.z *= -1;
+        downText.transform.localPosition = localTopPos;
+
+        canvasObject.SetActive(false);
     }
 
     void FixedUpdate()

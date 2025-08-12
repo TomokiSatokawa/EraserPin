@@ -18,9 +18,11 @@ public class EraserMove : MonoBehaviourPunCallbacks
     [PunRPC]
     public void Move(int eraserIndex, float power , Vector3 direction ,Vector3 rotate, Vector3 hitPosition)
     {
+        //Log.text("p:"+power + "d:"+ direction +"r:"+rotate);
+
         if(PlayerPrefs.GetInt("Dnumber") != 1)
         {
-            //return;
+            return;
         }
 
         direction.y = 0;
@@ -30,9 +32,10 @@ public class EraserMove : MonoBehaviourPunCallbacks
 
         GameObject targetEraser = FindAnyObjectByType<EraserClone>().cloneEraserObjects[eraserIndex - 1];
         Rigidbody rb = targetEraser.GetComponent<Rigidbody>();
-        Log.text("Foce" + direction);
         Vector3 moveForce = direction.normalized * (power / 50f);
+        moveForce /= 10;
         rb.AddForce(moveForce, ForceMode.Impulse);
+        //Log.text("Foce" + moveForce);
         rb.inertiaTensor = new Vector3(1f, 1f, 1f); // åyÇ≠Ç∑ÇÈï˚å¸Çí≤êÆ
         rb.inertiaTensorRotation = Quaternion.identity;
         rb.maxAngularVelocity = 30f;
@@ -43,8 +46,8 @@ public class EraserMove : MonoBehaviourPunCallbacks
             rotate = Vector3.zero;
         }
         power /= 20;
-        Log.text("Rotate" + rotate +""+ power);
-        rb.AddTorque(rotate * power, ForceMode.Impulse);
+        //Log.text("Rotate" + rotate +""+ power);
+        rb.AddTorque(rotate * power*10, ForceMode.Impulse);
         FindAnyObjectByType<GameManager>().Check();
     }
     public Vector3 PowerRestraint(Vector3 d)

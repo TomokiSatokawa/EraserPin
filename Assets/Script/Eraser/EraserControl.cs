@@ -5,16 +5,12 @@ using UnityEngine;
 public class EraserControl : EraserControlBase
 {
     public int playerPoitionX = 1;
-    // Start is called before the first frame update
-    void Start()
-    {
-    }
-
     // Update is called once per frame
     void Update()
     {
-        
-       //入力したキーに応じてplayerPositionを変える
+        base.Update();
+
+        //入力したキーに応じてplayerPositionを変える
         if (Input.GetKeyDown(KeyCode.UpArrow))
         {
             playerPoitionX++;

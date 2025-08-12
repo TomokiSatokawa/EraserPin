@@ -65,7 +65,7 @@ public class PointerControl : MonoBehaviour
                         position.y = targetEraser.GetComponent<EraserControlBase>().GetTopPosition();
                         hitMarker.transform.position = position;
                         hitEraser = hit;
-                        //directionRotation.DataSet(hitEraser, pointerObject.transform.forward);
+                        directionRotation.DataSet(hitEraser, pointerObject.transform.forward,1);
                         continue;
                     }
 
@@ -101,6 +101,11 @@ public class PointerControl : MonoBehaviour
     {
         directionRotation.DataSet(hitEraser, pointerObject.transform.forward,Power);
         return directionRotation.GetDirection();
+    }
+    public void ComData(RaycastHit hit,Vector3 rayDirection)
+    {
+        hitEraser = hit;
+        pointerObject.transform.forward = rayDirection;
     }
     public Vector3 GetRotate(float Power)
     {

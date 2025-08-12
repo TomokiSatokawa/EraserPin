@@ -33,6 +33,10 @@ public class CardControl : MonoBehaviour
         {
             isGimmick.text = "ÉMÉ~ÉbÉNÇ»Çµ";
         }
+        if(stageData.stageImage != null)
+        {
+            stageImage.sprite = stageData.stageImage;
+        }
     }
 
     // Update is called once per frame

@@ -26,7 +26,7 @@ public class BombEraser : HardEraserBase
                 direction = direction.normalized;
                 direction += Vector3.up * flyPower;
                 direction /= 8;
-                Log.text("”š•— : " + direction);
+                //Log.text("”š•— : " + direction);
                 eraser.GetComponent<Rigidbody>().AddForce(direction, ForceMode.Impulse);
                 eraser.GetComponent<Rigidbody>().AddTorque(new Vector3(Random.Range(90, 360), Random.Range(90, 360), Random.Range(90, 360)),ForceMode.Impulse);
             }

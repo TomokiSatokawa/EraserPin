@@ -11,11 +11,12 @@ public class RoomOption : MonoBehaviour
     public StepperMove accessStepper;
     public TMP_InputField roomName;
     public RoomManager roomManager;
+    public GameObject button;
     // Start is called before the first frame update
     void Start()
     {
         roomName.ActivateInputField();
-    } 
+    }
 
     // Update is called once per frame
     void Update()
@@ -40,7 +41,12 @@ public class RoomOption : MonoBehaviour
         }
         if (accessStepper.GetData() == 0)
         {
-            roomManager.CreateOpenRoom(options, gameMode, roomName.text);
+            if (roomManager.CreateOpenRoom(options, gameMode, roomName.text))
+            {
+                button.SetActive(false);
+                button.SetActive(true);
+            }
+
         }
         else
         {
