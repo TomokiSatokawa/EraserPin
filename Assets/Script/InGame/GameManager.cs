@@ -194,6 +194,7 @@ public class GameManager : MonoBehaviourPunCallbacks, IPunObservable
     public void Kill(int playerNumber)
     {
         playerList[playerNumber -1].isAlive = false;
+        FindAnyObjectByType<PlayerListControl>().DropoutCheck();
     }
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
     {

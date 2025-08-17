@@ -5,6 +5,7 @@ using Photon.Pun;
 using UnityEngine.UI;
 using System.ComponentModel;
 using TMPro;
+using Unity.VisualScripting;
 
 public class DeviceView : MonoBehaviourPunCallbacks
 {
@@ -71,6 +72,7 @@ public class DeviceView : MonoBehaviourPunCallbacks
             {
                 b = false;
                 break;
+                
             }
         }
         nextWindowButton.GetComponent<Button>().interactable = b;

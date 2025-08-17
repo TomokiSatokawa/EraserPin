@@ -22,13 +22,13 @@ public class DirectionRotation : MonoBehaviour
     {
 
     }
-    public void DataSet(RaycastHit hit,Vector3 rayDirection,float power)
+    public void DataSet(RaycastHit hit, Vector3 rayDirection, float power)
     {
         inputNormal = hit.normal; //pointerObject.transform.forward;
         inputNormal = inputNormal.normalized;
         inputNormal *= -1;
-        
-         rotatePower = 0f;
+
+        rotatePower = 0f;
         if (hit.collider.gameObject.name == "‰~’Œ")
         {
             rotatePower = hit.collider.transform.InverseTransformPoint(hit.point).x;
@@ -40,26 +40,27 @@ public class DirectionRotation : MonoBehaviour
         {
             rotatePower = Vector3.Distance(GetCenter(hit), hit.point);
         }
-            rotatePower *= 10;
+        rotatePower *= 10;
 
 
         rotatePower = float.Parse(rotatePower.ToString("N2"));
         rotatePower = Normalize(rotatePower);
         rotatePower *= power;
-        if(rotatePower / 20 < 0f)
+        if (rotatePower / 20 < 0f)
         {
             rotatePower = 0f;
         }
 
 
         Debug.Log(rotatePower);
-        outputDirection = inputNormal.normalized + rayDirection.normalized * (rotatePower/10);
+        outputDirection = inputNormal.normalized + rayDirection.normalized * (rotatePower / 10);
         outputDirection = outputDirection.normalized;
 
         outputRotation = -RotationDirection(hit) * rotatePower;
 
         Debug.DrawRay(hit.point, outputDirection * 2, Color.green, 2f);
         //Debug.LogError("Stop");
+
     }
     //AI
     public Vector3 GetCenter(RaycastHit hit)
@@ -93,7 +94,7 @@ public class DirectionRotation : MonoBehaviour
             case HitSide.Left:
             case HitSide.Right:
             case HitSide.back:
-                if(value < 0.5f)
+                if (value < 0.5f)
                 {
                     value = 0;
                 }
@@ -101,6 +102,7 @@ public class DirectionRotation : MonoBehaviour
                 break;
 
             case HitSide.front:
+                value /= 5;
                 break;
         }
         return value;
@@ -119,7 +121,7 @@ public class DirectionRotation : MonoBehaviour
                 isClock = localHitPoint.x > 2.3;
                 break;
             case HitSide.Right:
-               
+
                 isClock = localHitPoint.x < 2.3;
                 break;
 
@@ -130,7 +132,7 @@ public class DirectionRotation : MonoBehaviour
                 Debug.LogError("HitSide");
                 break;
         }
-        if(isClock)
+        if (isClock)
         {
             return new Vector3(0, 1, 0);
         }
@@ -149,9 +151,7 @@ public class DirectionRotation : MonoBehaviour
     }
     public float Power(float power)
     {
-        //      power =  power - rotatePower * 1.5f;
-            power *= 5;
-        return power;   
+        power *= 5;
+        return power;
     }
 }
-
