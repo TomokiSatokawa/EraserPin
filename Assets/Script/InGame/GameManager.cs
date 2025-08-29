@@ -23,6 +23,7 @@ public class GameManager : MonoBehaviourPunCallbacks, IPunObservable
     public CharacterDataList characterDataList;
     public GameObject frameUI;
     public GameObject playerListUI;
+    public ChatManager chatManager;
     [System.Serializable]public class PlayerData
     {
         public int deviceNumber;
@@ -83,7 +84,7 @@ public class GameManager : MonoBehaviourPunCallbacks, IPunObservable
     public CharacterData GetEraserData(int i)
     {
         string CharacterCode = (string)PhotonNetwork.CurrentRoom.CustomProperties["character" + (i).ToString()];
-        Debug.Log( i+""+CharacterCode);
+        //Debug.Log( i+""+CharacterCode);
         string gameMode = CharacterCode[0].ToString();//null
         int Index = int.Parse(CharacterCode.Substring(1));
         if (CharacterCode[0] == 'A')
@@ -127,15 +128,16 @@ public class GameManager : MonoBehaviourPunCallbacks, IPunObservable
         }
         if(aliveCount <= 1)
         {
-            Debug.Log("Clear");
+            //Debug.Log("Clear");
             killCheck.Winner(winner);
             cameraPhotonView.GetComponent<PhotonView>().RPC("Result", RpcTarget.All);
             photonView.RPC(nameof(ResultUI), RpcTarget.All);
+            turn = 0;
             return;
         }
         if (turn > playerList.Count)
         {
-            Debug.Log("Reset");
+            //Debug.Log("Reset");
             turn = 0;
             NextTurn();
             return;
@@ -155,6 +157,7 @@ public class GameManager : MonoBehaviourPunCallbacks, IPunObservable
         if (playerList[turn-1].isComputer)
         {
             comMove.Input(eraserClone.cloneEraserObjects[turn - 1]);
+            DOTween.CompleteAll();
             DOVirtual.DelayedCall(1f,EraserFocus);
             return;
         }
@@ -191,10 +194,12 @@ public class GameManager : MonoBehaviourPunCallbacks, IPunObservable
         stopCheck.Check();
         }
     }    // Update is called once per frame
+    [PunRPC]
     public void Kill(int playerNumber)
     {
         playerList[playerNumber -1].isAlive = false;
         FindAnyObjectByType<PlayerListControl>().DropoutCheck();
+        chatManager.ChatMessage(playerNumber + "Pが脱落した！");
     }
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
     {
@@ -231,6 +236,10 @@ public class GameManager : MonoBehaviourPunCallbacks, IPunObservable
                 Pointor();
             }
                 i++;
+        }
+        if(deviceNumber == 1)
+        {
+            chatManager.gameObject.GetComponent<PhotonView>().RPC(nameof(chatManager.ChatMessage), RpcTarget.All, otherPlayer.NickName + "が退出しました。" + otherPlayer.NickName + "の代わりにCOMがプレイします。");
         }
     }
 }

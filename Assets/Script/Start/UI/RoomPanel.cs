@@ -12,6 +12,8 @@ public class RoomPanel : MonoBehaviour
     public Button JoinButton;
     public TextMeshProUGUI buttonText;
     public RoomManager roomManager;
+    public Sprite joinImage;
+    public Sprite playingImage;
     private string pass;
     // Start is called before the first frame update
     void Start()
@@ -32,12 +34,12 @@ public class RoomPanel : MonoBehaviour
         if (roomData.IsOpen)
         {
             JoinButton.interactable = true;
-            buttonText.text = "ŽQ‰Á";
+            JoinButton.gameObject.GetComponent<Image>().sprite = joinImage;
         }
         else
         {
             JoinButton.interactable= false;
-            buttonText.text = "ƒvƒŒƒC’†";
+            JoinButton.gameObject.GetComponent<Image>().sprite = playingImage;
         }
         pass = roomData.Name;
     }

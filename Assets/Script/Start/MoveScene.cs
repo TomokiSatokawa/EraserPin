@@ -26,11 +26,14 @@ public class MoveScene : MonoBehaviourPunCallbacks
     }
     public void NextButton()
     {
+        FindAnyObjectByType<InGameNetworkManager>().SetData("RoomStatus", 1, 1);
+        //Move(selectCard.stageData.sceneName);
         photonView.RPC(nameof(Move), RpcTarget.All, selectCard.stageData.sceneName);
     }
     [PunRPC]
     public void Move(string name)
     {
+        //PhotonNetwork.LoadLevel(name);
         SceneManager.LoadScene(name);
     }
 }

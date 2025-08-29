@@ -97,9 +97,9 @@ public class ChoiceManager : MonoBehaviour
             otherPlayerCount += (PhotonNetwork.CurrentRoom.CustomProperties["playerCount" + "" + i] is int op) ? op : 0;
             otherPlayerCount += (PhotonNetwork.CurrentRoom.CustomProperties["comCount" + "" + i] is int oc) ? oc : 0;
         }
-
         int playerCount = (PhotonNetwork.CurrentRoom.CustomProperties["playerCount" + "" + deviceNumber.ToString()] is int p) ? p : 0;
         int comCount = (PhotonNetwork.CurrentRoom.CustomProperties["comCount" + "" + deviceNumber.ToString()] is int c) ? c : 0;
+        FindAnyObjectByType<PreviewControl>().EraserColor(otherPlayerCount, playerCount);
         int a = 1;
         foreach (GameObject panel in panelList)
         {

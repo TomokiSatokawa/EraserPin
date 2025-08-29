@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 public class StepperControl : MonoBehaviour
 {
-    
+    [SerializeField]
     private int value;
     public int Value { get { return value; } }
     public int maxValue;

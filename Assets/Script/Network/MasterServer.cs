@@ -4,6 +4,7 @@ using UnityEngine;
 using Photon.Pun;
 using Photon.Realtime;
 using TMPro;
+using UnityEngine.UI;
 public class MasterServer : MonoBehaviourPunCallbacks
 {
     public GameObject loadObject;
@@ -11,14 +12,22 @@ public class MasterServer : MonoBehaviourPunCallbacks
     public GameObject errorObject;
     public TextMeshProUGUI messageText;
     public TextMeshProUGUI errorText;
+    private NicknameManager nicknameManager;
     private ScreenChange screenChange;
     private void Start()
     {
         screenChange = FindAnyObjectByType<ScreenChange>();
+        nicknameManager = FindAnyObjectByType<NicknameManager>();
+        nicknameManager.Active(false);
+    }
+    [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
+    static void Init()
+    {
+        PlayerPrefs.SetString("Name", " ");
     }
     public void OnMasterSever(bool isOnLine)
     {
-            Debug.Log(isOnLine);
+            //Debug.Log(isOnLine);
         PhotonNetwork.OfflineMode = !isOnLine;
         if (isOnLine)
         {
@@ -32,6 +41,10 @@ public class MasterServer : MonoBehaviourPunCallbacks
         loadObject.SetActive(false);
         screenChange.OnClick(1);
         FindAnyObjectByType<StartCameraWork>().TableFocus();
+        if (PlayerPrefs.GetString("Name") == " ")
+        {
+            nicknameManager.Active(true);
+        }
     }
     public override void OnConnectedToMaster()
     {

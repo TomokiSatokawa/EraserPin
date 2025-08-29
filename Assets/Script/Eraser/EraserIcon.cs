@@ -10,6 +10,7 @@ public class EraserIcon : MonoBehaviour
     public GameObject cover;
     public GameObject decoration;
     public Color dropoutColor;
+    public GameObject comText;
     private int playerNumber;
     private Animator anim;
     private Color coverColor;
@@ -24,11 +25,15 @@ public class EraserIcon : MonoBehaviour
     {
 
     }
-    public void SetData(Sprite b, Sprite c, Sprite d)
+    public void SetSprite(Sprite b, Sprite c, Sprite d)
     {
         body.GetComponent<Image>().sprite = b;
         cover.GetComponent<Image>().sprite = c;
         decoration.GetComponent<Image>().sprite = d;
+    }
+    public void isCom(bool com)
+    {
+        comText.SetActive(com);
     }
     public void SetPlayerNumber(int number)
     {
@@ -45,13 +50,13 @@ public class EraserIcon : MonoBehaviour
         anim.enabled = number == playerNumber;
         if (number == playerNumber)
         {
-            Debug.Log("trun");
+            //Debug.Log("trun");
             anim.Play("Blink", 0, 0f);
         }
     }
     public void Active(bool b)
     {
-        Debug.Log(b);
+        //Debug.Log(b);
         if (!b)
         {
             body.GetComponent<Image>().color = Color.white;

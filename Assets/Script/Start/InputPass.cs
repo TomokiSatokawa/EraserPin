@@ -5,6 +5,7 @@ using TMPro;
 using System.Linq;
 using UnityEngine.UI;
 using static UnityEngine.UI.Image;
+using System.ComponentModel.Design;
 public class InputPass : MonoBehaviour
 {
     public string pass;
@@ -14,6 +15,7 @@ public class InputPass : MonoBehaviour
     void Start()
     {
         passText.SetText("ルームパスを入力");
+        ErrorAcitve(false);
     }
 
     // Update is called once per frame
@@ -65,9 +67,24 @@ public class InputPass : MonoBehaviour
         {
             passText.SetText("ルームパスを入力");
         }
+        ErrorAcitve(false);
     }
     public string GetPass()
     {
         return pass;
+    }
+    public void ErrorAcitve(bool a , string message = "エラー")
+    {
+        if (a)
+        {
+            passText.SetText(message);
+            passText.color = Color.red;
+            pass = "";
+        }
+        else
+        {
+            passText.color = Color.black;
+        }
+        
     }
 }

@@ -26,14 +26,14 @@ public class ComMove : MonoBehaviour
         foreach(GameObject obj in eraserClone.cloneEraserObjects)
         {
             if(obj == null) continue;
+            if (obj.name == comEraser.name)
+            {
+                continue;
+            }
             if(i == 0)
             {
                 near = obj;
                 i++;
-                continue;
-            }
-            if (obj.name == comEraser.name)
-            {
                 continue;
             }
             float distance1 = Vector3.Distance(near.transform.position,comEraser.transform.position);
@@ -43,9 +43,8 @@ public class ComMove : MonoBehaviour
                 near = obj;
             }
         }
-        Debug.Log(near.gameObject.name);
-        
 
+        Debug.Log(near.gameObject.name);
         Vector3 direction = near.transform.position - comEraser.transform.position;
         EraserControlBase eraserControl = comEraser.GetComponent<EraserControlBase>();
         Vector3 startPosition = comEraser.transform.position;
@@ -65,7 +64,6 @@ public class ComMove : MonoBehaviour
         Debug.DrawRay(s,g, Color.cyan,5f);
         foreach(RaycastHit hit in Physics.RaycastAll(ray))
         {
-            Debug.Log(hit.collider.gameObject);
             if (!hit.collider.gameObject.CompareTag("EraserMesh"))
             {
                 continue;

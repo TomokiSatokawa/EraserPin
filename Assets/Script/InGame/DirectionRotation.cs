@@ -52,13 +52,13 @@ public class DirectionRotation : MonoBehaviour
         }
 
 
-        Debug.Log(rotatePower);
+        //Debug.Log(rotatePower);
         outputDirection = inputNormal.normalized + rayDirection.normalized * (rotatePower / 10);
         outputDirection = outputDirection.normalized;
 
         outputRotation = -RotationDirection(hit) * rotatePower;
 
-        Debug.DrawRay(hit.point, outputDirection * 2, Color.green, 2f);
+        //Debug.DrawRay(hit.point, outputDirection * 2, Color.green, 2f);
         //Debug.LogError("Stop");
 
     }
@@ -151,7 +151,7 @@ public class DirectionRotation : MonoBehaviour
     }
     public float Power(float power)
     {
-        power *= 5;
+        power *= 15;
         return power;
     }
 }

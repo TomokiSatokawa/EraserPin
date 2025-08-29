@@ -2,10 +2,12 @@ using UnityEngine;
 using Photon.Pun;
 using ExitGames.Client.Photon;
 using UnityEngine.SceneManagement;
+using TMPro;
 public class InGameLoad : MonoBehaviourPunCallbacks
 {
     private static Hashtable propHash = new Hashtable();
     public GameObject LoadObject;
+    public TextMeshProUGUI LoadText;
     public EraserClone eraserClone;
     public CameraWork cameraWork;
     private bool a = false;
@@ -31,7 +33,10 @@ public class InGameLoad : MonoBehaviourPunCallbacks
             inScene = inScene && load;
         }
         LoadObject.SetActive(!inScene);
-
+        if (inScene)
+        {
+            LoadText.text = "ロード中";
+        }
         if (inScene)
         {
             eraserClone.Clone();
@@ -41,16 +46,20 @@ public class InGameLoad : MonoBehaviourPunCallbacks
     }
     public void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        
+         //PlayerPrefs.GetInt("Dnumber"), 1);
 
         bool inScene = true;
         for (int i = 1; i <= PhotonNetwork.CurrentRoom.PlayerCount; i++)
         {
+            FindAnyObjectByType<InGameNetworkManager>().SetData("RoomStatus", i, 1);    
             bool load = (PhotonNetwork.CurrentRoom.CustomProperties["Load" + "" + i.ToString()] is bool p) ? p : false;
             inScene = inScene && load;
         }
         LoadObject.SetActive(!inScene);
-
+        if (inScene)
+        {
+            LoadText.text = "ロード中";
+        }
         if (inScene)
         {
             eraserClone.Clone();

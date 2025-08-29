@@ -37,8 +37,9 @@ public class PlayerListControl : MonoBehaviour
             EraserIcon eraserIcon = clonedObjcet.GetComponent<EraserIcon>(); 
             CharacterData characterData = data.eraserData;
             //Debug.Log(characterData.name);
-            eraserIcon.SetData(characterData.bodyImage, characterData.coverImage, characterData.decoration);
+            eraserIcon.SetSprite(characterData.bodyImage, characterData.coverImage, characterData.decoration);
             eraserIcon.ChangeColor(colorData.activeColorPackage[i]);
+            eraserIcon.isCom(data.isComputer);
             eraserIcon.SetPlayerNumber(i + 1);
             icons.Add(eraserIcon);
             i++;
@@ -49,7 +50,8 @@ public class PlayerListControl : MonoBehaviour
         int i = 0;
         foreach(GameManager.PlayerData data in FindAnyObjectByType<GameManager>().playerList)
         {
-            icons[i].Active(data.isAlive);
+            icons[i].Active(!data.isAlive);
+            i++;
         }
     }
 }

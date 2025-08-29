@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9507f4f1bdd115645a481aaae8d99825, type: 3}
   m_Name: MiniTriangle
   m_EditorClassIdentifier: 
-  stageName: test
+  stageName: "\u4E09\u89D2\u306E\u673A"
   sceneName: MiniTriangle
-  stageImage: {fileID: 0}
+  stageImage: {fileID: 21300000, guid: 91f45aaa8ba19ba46a4fc10f2135df39, type: 3}
   miniPlayerCount: 2
   maxPlayerCount: 5
   isGimmick: 0

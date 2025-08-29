@@ -144,6 +144,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7126346364434833760}
   - component: {fileID: 2098621854455685391}
+  - component: {fileID: 5796858816665953531}
   m_Layer: 0
   m_Name: Stpper
   m_TagString: Untagged
@@ -187,14 +188,56 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f70f231b5ce09e849a863b84d989c91a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  value: 0
   maxValue: 4
   minValue: 1
+  defaultValue: 0
   text: {fileID: 5216272927902752550}
   upButton: {fileID: 83349710107580439}
   downButton: {fileID: 5685829142165977496}
   activeButton: 1
   isLoop: 0
+--- !u!114 &5796858816665953531
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1228459129248341759}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cd945364f8fd3594da3562ffc7f9cefc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  up:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 2098621854455685391}
+        m_TargetAssemblyTypeName: StepperControl, Assembly-CSharp
+        m_MethodName: OnClick
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
+  down:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 2098621854455685391}
+        m_TargetAssemblyTypeName: StepperControl, Assembly-CSharp
+        m_MethodName: OnClick
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &2218657365660231073
 GameObject:
   m_ObjectHideFlags: 0

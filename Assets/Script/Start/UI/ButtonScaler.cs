@@ -5,7 +5,8 @@ using DG.Tweening; // ← 忘れずに
 public class ButtonScalerTween : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
     protected float scaleUp = 1.1f;       // 拡大倍率
-    protected float duration = 0.2f;      // アニメーションの時間
+    protected float duration = 0.2f;      //
+                                          //アニメーションの時間
 
     private Vector3 originalScale;
     private Tween currentTween;

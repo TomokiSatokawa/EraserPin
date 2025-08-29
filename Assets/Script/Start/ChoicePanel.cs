@@ -4,6 +4,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
+using System.Net.Sockets;
 public class ChoicePanel : MonoBehaviour
 {
     public CharacterStepper stepper;
@@ -41,6 +42,17 @@ public class ChoicePanel : MonoBehaviour
         nameText.SetText(number.ToString() + "P");
         playerNumber = number;
         comRavel.SetActive(isCom);
+        namePlate.color = AddWhite(colorData.activeColorPackage[playerNumber - 1]);
+        previewControl = FindAnyObjectByType<PreviewControl>();
+    }
+    public Color AddWhite(Color def)
+    {
+        float h1;
+        float s1;
+        float v1;
+        Color.RGBToHSV(def, out h1, out s1, out v1);
+        s1 = 0.5f;
+        return Color.HSVToRGB(h1, s1, v1);
     }
     public void SliderMove(CharacterData data)
     {
@@ -50,6 +62,10 @@ public class ChoicePanel : MonoBehaviour
     }
     public void ChangeEraser()
     {
-        previewControl.ChangeCharacter(PlayerNumber,stepper.Value);
+        if(previewControl == null)
+        {
+            previewControl = FindAnyObjectByType<PreviewControl>();
+        }
+        previewControl.ChangeCharacter(localPlayerNumber,stepper.Value);
     }
 }

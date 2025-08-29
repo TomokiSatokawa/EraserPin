@@ -14,6 +14,7 @@ public class ScrollbarControl : MonoBehaviourPunCallbacks
     public GameObject clonePrefab;
     public List<GameObject> clonedObject;
     public GameObject backButton;
+    public GameObject continueButton;
     private GameManager gameManager;
     // Start is called before the first frame update
     void Start()
@@ -21,6 +22,7 @@ public class ScrollbarControl : MonoBehaviourPunCallbacks
         content.SetActive(false);
         gameManager = FindAnyObjectByType<GameManager>();
         backButton.SetActive(false);
+        continueButton.SetActive(false);
     }
 
     // Update is called once per frame
@@ -33,8 +35,10 @@ public class ScrollbarControl : MonoBehaviourPunCallbacks
         //scrollRect.enabled = false;
         content.SetActive(true);
         List<int> ranking = new List<int>();
+        ranking.Clear();
         for (int i = 1; i <= gameManager.playerList.Count; i++)
         {
+            Debug.Log(i);
             int inum = (PhotonNetwork.CurrentRoom.CustomProperties["ranking" + "" + i.ToString()] is int a) ? a : 0;
             ranking.Add(inum);
         }
@@ -43,6 +47,7 @@ public class ScrollbarControl : MonoBehaviourPunCallbacks
         scrollRect.verticalNormalizedPosition = 0;
 
        backButton.SetActive(true);
+       continueButton.SetActive(true);
     }
     public void Clone(List<PlayerData> playerList , List<int> ranking)
     {

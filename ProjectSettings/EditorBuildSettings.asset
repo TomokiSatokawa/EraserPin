@@ -14,4 +14,16 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Stage/MiniTriangle.unity
     guid: 3ca78a5b590b06845afaa8a31c38b9f1
+  - enabled: 1
+    path: Assets/Scenes/Stage/MiniSquare.unity
+    guid: 870810057b4598840bf1a121861c6102
+  - enabled: 1
+    path: Assets/Scenes/Stage/BigCircle.unity
+    guid: 52d03cdff6dfc214b9085bd27b109bab
+  - enabled: 1
+    path: Assets/Scenes/Stage/LongTable.unity
+    guid: ddf9768c590b22a4bb0f46607ca19500
+  - enabled: 1
+    path: Assets/Scenes/Stage/UShapedDesk.unity
+    guid: b79ffc826a1053749910981f965cb785
   m_configObjects: {}

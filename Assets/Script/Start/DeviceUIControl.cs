@@ -26,11 +26,12 @@ public class DeviceUIControl : MonoBehaviourPunCallbacks
     // Update is called once per frame
     void Update()
     {
-        string key = "name" + deviceNumber;
-        string name = PhotonNetwork.CurrentRoom.CustomProperties.ContainsKey(key)
-            && PhotonNetwork.CurrentRoom.CustomProperties[key] is string n
-            ? n
-            : "";
+        //string key = "name" + deviceNumber;
+        //string name = PhotonNetwork.CurrentRoom.CustomProperties.ContainsKey(key)
+        //    && PhotonNetwork.CurrentRoom.CustomProperties[key] is string n
+        //    ? n
+        //    : "";
+        string name = PhotonNetwork.PlayerList[deviceNumber -1].NickName;
         if(name == "" || deviceText.text != "")
         {
             return;
@@ -46,7 +47,11 @@ public class DeviceUIControl : MonoBehaviourPunCallbacks
             obj.Active(i <= playerCount + comCount);
             i++;
         }
-
+        //int otherPlayerCount;
+        //for(int a =0 ; a < playerCount + comCount; a++)
+        //{
+        //    eraserUIs[i].playerNumber =  otherPlayerCount + a;
+        //}
         eraserUIs[0].IsCom(false);
         eraserUIs[1].IsCom(false);
         eraserUIs[2].IsCom(false);

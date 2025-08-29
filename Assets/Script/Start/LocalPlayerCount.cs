@@ -3,16 +3,25 @@ using System.Collections.Generic;
 using Photon.Pun;
 using Photon.Realtime;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class LocalPlayerCount : MonoBehaviourPunCallbacks
 {
     public StepperControl playerStepper;
     public StepperControl comStepper;
     public StepperMove gameMode;
+    public Button nextButton;
+    public GameObject manyPlayers;
+    public GameObject fewPlayers;
     private PreviewControl previewControl;
     public void Start()
     {
         previewControl = FindAnyObjectByType<PreviewControl>();
+        int allPlayer = playerStepper.Value + comStepper.Value;
+        nextButton.interactable = true;
+        fewPlayers.SetActive(false);
+        manyPlayers.SetActive(false);
+        StepperClick();
     }
     public void OnClick()
     {
@@ -42,6 +51,10 @@ public class LocalPlayerCount : MonoBehaviourPunCallbacks
     public void StepperClick()
     {
         previewControl.Active(playerStepper.Value + comStepper.Value);
+        int allPlayer = playerStepper.Value + comStepper.Value;
+        nextButton.interactable = allPlayer > 1 && allPlayer < 5;
+        fewPlayers.SetActive(allPlayer < 2);
+        manyPlayers.SetActive(allPlayer > 4);
     }
     public override void OnJoinedRoom()
     {

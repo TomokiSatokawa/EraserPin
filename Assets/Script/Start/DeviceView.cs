@@ -114,7 +114,7 @@ public class DeviceView : MonoBehaviourPunCallbacks
     {
         SetDeviceNumber();
         int dNumber = _deviceNumber - 1;
-        Debug.Log(dNumber);
+        //Debug.Log(dNumber);
         GameObject gameObject = deviceUIObject[dNumber];
         deviceUIObject[dNumber] = deviceUIObject[0];
         deviceUIObject[0] = gameObject;

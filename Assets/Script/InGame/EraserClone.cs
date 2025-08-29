@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
 using TMPro;
-
 #if UNITY_EDITOR
 using UnityEngine.SceneManagement;
 #endif
@@ -19,8 +18,9 @@ public class EraserClone : MonoBehaviourPunCallbacks
     public GameObject eraserPrefab;
     public ColorData colorData;
     public CharacterDataList characterDataList;
-    public TextMeshProUGUI textMeshProUGUI;
+    //public TextMeshProUGUI textMeshProUGUI;
     public List<GameObject> cloneEraserObjects = new List<GameObject>();
+    private bool isColorChange = true;
     // Start is called before the first frame update
     void Start()
     {
@@ -44,7 +44,7 @@ public class EraserClone : MonoBehaviourPunCallbacks
     // Update is called once per frame
     void Update()
     {
-        if(PlayerPrefs.GetInt("AllPlayer") == 0)
+        if (PlayerPrefs.GetInt("AllPlayer") == 0)
         {
             int playerCount = 0;
             for (int a = 1; a <= PhotonNetwork.CurrentRoom.PlayerCount; a++)
@@ -54,20 +54,31 @@ public class EraserClone : MonoBehaviourPunCallbacks
             }
             PlayerPrefs.SetInt("AllPlayer", playerCount);
         }
-        if (PlayerPrefs.GetInt("Dnumber") == 1 || cloneEraserObjects.Count == PlayerPrefs.GetInt("AllPlayer"))
+
+        if (PlayerPrefs.GetInt("Dnumber") == 1  || !isColorChange)//|| cloneEraserObjects.Count == PlayerPrefs.GetInt("AllPlayer"))
         {
             return;
 
         }
+        bool isChange = false;
         Debug.Log("ColorChange");
         int i = 0;
+        
         foreach (GameObject eraser in GameObject.FindGameObjectsWithTag("Eraser"))
-        {//名前の最後をループカウンターに
+        {
             Log.text("tag");
-            //playerNumber = i+1;
-            eraser.GetComponent<EraserControlBase>().ChangeColor(colorData.activeColorPackage[i]);
-            cloneEraserObjects.Add(eraser);
+            EraserControlBase eraserControl = eraser.GetComponent<EraserControlBase>();
+            if (eraserControl.ChangeColor(colorData.activeColorPackage[i]))
+            {
+                eraserControl.COMRavel(FindAnyObjectByType<GameManager>().playerList[i].isComputer);
+                isChange = true;
+                cloneEraserObjects.Add(eraser);
+            }
             i++;
+        }
+        if (!isChange && cloneEraserObjects.Count == PlayerPrefs.GetInt("AllPlayer"))
+        {
+            isColorChange = false;
         }
     }
     public ClonePosition SwitchPlayerPosition()
@@ -80,7 +91,7 @@ public class EraserClone : MonoBehaviourPunCallbacks
                return clonePosition;
             }
         }
-        textMeshProUGUI.text += "PlayerPosition not found. Number of players tried to find:" + playerCount;
+        //textMeshProUGUI.text += "PlayerPosition not found. Number of players tried to find:" + playerCount;
         Debug.LogError("PlayerPosition not found. Number of players tried to find:" + playerCount);
         return null;
     }

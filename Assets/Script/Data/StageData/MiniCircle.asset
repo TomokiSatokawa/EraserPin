@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9507f4f1bdd115645a481aaae8d99825, type: 3}
   m_Name: MiniCircle
   m_EditorClassIdentifier: 
-  stageName: "\u5C0F\u3055\u3044\u5186"
+  stageName: "\u4E38\u3044\u673A"
   sceneName: MiniCircle
-  stageImage: {fileID: 21300000, guid: 31474fbe061fc884c80047ff96f8d1fa, type: 3}
+  stageImage: {fileID: 21300000, guid: 61ed16ca2ec3c8d4fb1b53ae66aa6702, type: 3}
   miniPlayerCount: 2
   maxPlayerCount: 5
   isGimmick: 0

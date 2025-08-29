@@ -20,9 +20,21 @@ public class PreviewControl : MonoBehaviour
     {
         
     }
+    public void EraserColor(int otherPlayerCount,int playerCount)
+    {
+        Debug.Log(otherPlayerCount + " " + playerCount);
+        int i = 0;
+        foreach(GameObject eraser in erasers)
+        {
+            Color eraserColor = colorData.activeColorPackage[otherPlayerCount + i];
+            
+            eraser.GetComponent<EraserControlBase>().ChangeColor(eraserColor);
+            i++;
+        }
+    }
     public void Active(int playerCount)
     {
-        Debug.Log(playerCount);
+        //Debug.Log(playerCount);
         int i = 1;
         foreach (GameObject obj in erasers)
         {

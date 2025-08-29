@@ -6,6 +6,7 @@ using System.Threading;
 public class KillCheck : MonoBehaviourPunCallbacks
 {
     public GameObject killEffect;
+    public GameObject gameMasterNet;
     private static Hashtable propHash = new Hashtable();
     public GameManager gameManager;
     public int winnerEraser = 0;
@@ -22,26 +23,30 @@ public class KillCheck : MonoBehaviourPunCallbacks
     }
     public void OnTriggerEnter(Collider other)
     {
+        if (PlayerPrefs.GetInt("Dnumber") != 1)
+        {
+            return;
+        }
         GameObject hitObject = other.gameObject.transform.parent.gameObject;
-        if(hitObject.GetComponent<EraserControlBase>() != null)
+        if (hitObject.GetComponent<EraserControlBase>() != null)
         {
             EraserControlBase eraserData = hitObject.GetComponent<EraserControlBase>();
             PhotonNetwork.Instantiate(killEffect.name, hitObject.transform.position, Quaternion.identity);
-            FindAnyObjectByType<GameManager>().Kill(eraserData.playerNumber);
+            gameMasterNet.GetComponent<PhotonView>().RPC("Kill", RpcTarget.All, eraserData.playerNumber);
+
+
+            //Debug.Log("A");.
+            winnerEraser = hitObject.GetComponent<EraserControlBase>().playerNumber;
+            propHash["ranking" + "" + (RemainingPlayer() + 1).ToString()] = eraserData.playerNumber;
+            Debug.Log(eraserData.playerNumber + "P");
+            PhotonNetwork.CurrentRoom.SetCustomProperties(propHash);
+            propHash.Clear();
             PhotonNetwork.Destroy(hitObject);
 
-            if (PlayerPrefs.GetInt("Dnumber") == 1)
-            {
-                //Debug.Log("A");.
-                winnerEraser = hitObject.GetComponent<EraserControlBase>().playerNumber;
-                propHash["ranking" + "" + eraserData.playerNumber] = RemainingPlayer() + 1;
-                PhotonNetwork.CurrentRoom.SetCustomProperties(propHash);
-                propHash.Clear();
-            }
-                //Debug.Log("B");
+            //Debug.Log("B");
         }
 
-        
+
     }
     public int RemainingPlayer()
     {
@@ -53,7 +58,7 @@ public class KillCheck : MonoBehaviourPunCallbacks
                 count++;
             }
         }
-        Debug.Log(count);
+        Debug.Log(count + 1 + "ˆÊ");
         return count;
     }
     public void Winner(int playerNumber)
@@ -66,7 +71,7 @@ public class KillCheck : MonoBehaviourPunCallbacks
             }
             playerNumber = winnerEraser;
         }
-        propHash["ranking" + "" + playerNumber] = 1;
+        propHash["ranking" + "" + 1] = playerNumber;
         PhotonNetwork.CurrentRoom.SetCustomProperties(propHash);
         propHash.Clear();
     }

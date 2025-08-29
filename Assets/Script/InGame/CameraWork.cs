@@ -76,6 +76,7 @@ public class CameraWork : MonoBehaviourPunCallbacks
             position = RightPosition;
         }
         targetEraser = target;
+        DOTween.CompleteAll();
         Zoom(20, 2f);
         this.gameObject.transform.DOMove(position.transform.position, 2f, false);
         this.gameObject.transform.DORotate(position.transform.eulerAngles, 2f)

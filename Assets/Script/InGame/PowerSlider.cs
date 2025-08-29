@@ -80,7 +80,6 @@ public class PowerSlider : MonoBehaviour
     }
     public void ComPowerData(float value)
     {
-        Debug.Log(value);
         powerSlider.value = value;
     }
     public float GetData()

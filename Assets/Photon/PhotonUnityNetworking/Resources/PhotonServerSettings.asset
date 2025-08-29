@@ -57,6 +57,10 @@ MonoBehaviour:
   - Explosion
   - EraserEffect
   - ResultUI
+  - ContinueLogic
+  - DissolutionLogic
+  - Kill
+  - ChatMessage
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 0

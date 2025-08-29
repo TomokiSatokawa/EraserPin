@@ -26,11 +26,7 @@ public class EraserControlBase : MonoBehaviourPunCallbacks
     }
     public void Update()
     {
-
-        if (Input.GetKeyDown(KeyCode.G))
-        {
-            Log.text(playerNumber);
-        }
+        
     }
     public virtual void DataReset() { }
     public int GetPlayerNumber()
@@ -42,9 +38,11 @@ public class EraserControlBase : MonoBehaviourPunCallbacks
         return topPosition.transform.position.y;
     }
     public virtual void StopProcess() { }
-    public void ChangeColor(Color color)
+    public  bool ChangeColor(Color color)
     {
+        bool isChange = coverObject.GetComponent<MeshRenderer>().materials[0].color != color;
         coverObject.GetComponent<MeshRenderer>().materials[0].color = color;
+        return isChange;
     }
     public void COMRavel(bool b)
     {
